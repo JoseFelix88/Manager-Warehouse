@@ -174,7 +174,7 @@ public class Edicion extends database {
             return fechaConFormato;
 
         } catch (Exception er) {
-            System.out.println("error al formatear fecha: "+er);
+            System.out.println("error al formatear fecha: " + er);
         }
 
         return null;
@@ -216,38 +216,19 @@ public class Edicion extends database {
     }
 
     public void mensajes(int tipo, String sms) {
-
         sms = sms.toUpperCase();
-
         if (tipo == 1) {
-
-            // mensaje de adventencia
             JOptionPane.showMessageDialog(null, sms, "Advertencia", JOptionPane.WARNING_MESSAGE);
-
         }
-
         if (tipo == 2) {
-
-            // mensaje de informacion
-//                event = new NiconEvent("info..", sms, NiconEvent.NOTIFY_DEFAULT);
             JOptionPane.showMessageDialog(null, sms, "Info...", JOptionPane.INFORMATION_MESSAGE);
-
         }
-
         if (tipo == 3) {
-
-            // mensaje de Excepcion
             JOptionPane.showMessageDialog(null, sms, "Error...", JOptionPane.ERROR_MESSAGE);
-
         }
-
         if (tipo == 4) {
-
-            // mensaje de Excepcion
             System.out.println(sms);
-
         }
-
     }
 
     CambiaFormatoTexto formatoNum = new CambiaFormatoTexto();

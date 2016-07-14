@@ -505,9 +505,7 @@ public class ProductoDAO extends database implements crud<ProductoDTO> {
                 + "productosbase.cum,UPPER(db_invima.registros_sanitarios.ESTADOCUM ) AS ESTADOCUM ,\n"
                 + " productosbase.registrosanitario,\n"
                 + "UPPER(db_invima.registros_sanitarios.ESTADOREGISTRO) AS ESTADOREGISTRO",
-                SQL_WHERE = "productosbase.plu = '" + PLU + "' AND \n"
-                + "CONCAT(db_invima.registros_sanitarios.EXPEDIENTE,'-',db_invima.registros_sanitarios.CONSECUTIVO) = productosbase.cum\n"
-                + "GROUP BY productosbase.cum";
+                SQL_WHERE = "productosbase.plu = '" + PLU + "' GROUP BY productosbase.cum";
 
         Object rs[][] = con.select(SQL_TABLA, SQL_CAMPOS, SQL_WHERE);
 

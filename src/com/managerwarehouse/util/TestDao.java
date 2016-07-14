@@ -36,13 +36,14 @@ public class TestDao {
          }*/
 
         ProductoDAO producto = new ProductoDAO();
-        Lotealmacenado lotesalmacenado = producto.leerlotealmacenado("7702605102327");
+        Lotealmacenado lotesalmacenado = producto.leerlotealmacenado("7703145001262");
         NoficacionesProductos np = new NoficacionesProductos();
         System.out.println("F.V Producto: " + lotesalmacenado.getFecha_vencimiento());
-        np.Semaforizacion(DateUtil.newDate());
+        System.out.println( np.Alerta_Vencimiento(lotesalmacenado.getFecha_vencimiento()));
+        Edicion edicion = new Edicion();
+//        edicion.mensajes(1, "");
+        /* SalidaDAO dAO = new SalidaDAO();
         
-        /* Edicion edicion = new Edicion();
-         SalidaDAO dAO = new SalidaDAO();
          DetalleSalidaDAO dsdao = new DetalleSalidaDAO();
          Calendar c = new GregorianCalendar();
          Salida s = new Salida(1243, c.getTime(), "FARMACIA CERETE", "11555", 2, "1102819530", "123666", 1, null);
