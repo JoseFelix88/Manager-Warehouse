@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relacion de carga" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff35a256-646a-4964-bf09-247be64a1ad8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="relacion puntos" uuid="5da1de2c-1895-4ebb-83c9-71fb4a4a1e0e">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+puntos.NOMBRE,
+Count(DISTINCT detallesalidas.caja)
+FROM
+salidas ,
+detallesalidas ,
+puntos
+WHERE
+salidas.idsalida = detallesalidas.salida AND
+salidas.puntoentrega = puntos.COD_PUNTO
+GROUP BY
+puntos.NOMBRE
+ORDER BY
+puntos.NOMBRE ASC]]>
+		</queryString>
+		<field name="NOMBRE" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Count(DISTINCT detallesalidas.caja)" class="java.lang.Long"/>
+		<variable name="totalcantcajas" class="java.lang.Long" calculation="Sum">
+			<variableExpression><![CDATA[$F{Count(DISTINCT detallesalidas.caja)}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT
+NOW()]]>
+	</queryString>
+	<field name="NOW()" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="192" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a7b9b89b-e173-401a-b919-caf10271961b" x="26" y="100" width="50" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sincelejo]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="8f33c239-b1de-4109-9e09-de38f3696051" x="76" y="100" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3971841f-2abd-4e72-b1bd-d207ec5eda51" x="25" y="136" width="519" height="56"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Señor: Orlando Alviz\nSUMISALUD DE LA COSTA S.A.S HACE ENTREGA DE LA SIGUIENTE RELACION DE CARGA, QUE VA DIRIGIDA A NUESTROSPUNTOS DE ENTREGA."]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="53" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="8bffc3ab-5d0f-490d-8433-9e7211796461" key="table" style="table" x="48" y="3" width="360" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="relacion puntos" uuid="06a61df1-d1c1-4006-92ed-f343ab3e805c">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="171" uuid="1613c4b0-2143-43a1-87cd-30870adc6e22">
+						<jr:tableFooter height="61" rowSpan="1">
+							<staticText>
+								<reportElement uuid="59bdc1e4-0f43-4978-992e-2d06da99fd81" x="0" y="0" width="171" height="30"/>
+								<textElement verticalAlignment="Top"/>
+								<text><![CDATA[Autoriza:]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="9ce25081-96d0-4a7f-b89f-7256aac545ac" x="0" y="31" width="171" height="30"/>
+								<textElement verticalAlignment="Bottom"/>
+								<text><![CDATA[Transportador:]]></text>
+							</staticText>
+							<line>
+								<reportElement uuid="58ee0e8b-e184-4809-8f3b-eaf448296c2e" x="0" y="30" width="171" height="1"/>
+							</line>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6714bfa1-8033-4378-a261-a3140bcb6f06" x="0" y="0" width="171" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Punto de Entrega]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="34" rowSpan="1">
+							<staticText>
+								<reportElement uuid="b0d5346f-1a92-4920-8961-e8fa53602a86" x="99" y="0" width="72" height="34"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Total Cantidad de Cajas]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="297a4450-d6da-4469-8ad8-320aee1e9939" x="2" y="0" width="169" height="20"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="7c668e01-74f0-4273-afc9-f1be55409277">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="06ce9625-e687-4eb1-8327-72d1127cae06" x="0" y="0" width="71" height="30"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Cantidad de Cajas]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="34" rowSpan="1">
+							<textField>
+								<reportElement uuid="8f49f50f-084e-470e-8333-cccd9928b71c" x="0" y="0" width="71" height="34"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{totalcantcajas}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="c668ec26-6892-4d67-915f-ab324478a10a" x="0" y="0" width="71" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Count(DISTINCT detallesalidas.caja)}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

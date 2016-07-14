@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Contenido de Cajas" pageWidth="612" pageHeight="700" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="98cb23ec-93f2-4bce-b402-eacbaf128df0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numSalida" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numCaja" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+productosbase.plu,
+productosbase.codigobarras,
+productosbase.descripcion,
+lotes_almacenados.NUMEROLOTE,
+lotes_almacenados.FECHAVENCE,
+detallesalidas.cantidad,
+detallesalidas.operador,
+detallesalidas.caja,
+puntos.NOMBRE AS PuntodeEntrega
+FROM
+salidas ,
+puntos ,
+productosbase ,
+lotes_almacenados ,
+detallesalidas
+WHERE
+salidas.idsalida = detallesalidas.salida AND
+salidas.puntoentrega = puntos.COD_PUNTO AND
+detallesalidas.producto = productosbase.codigobarras AND
+detallesalidas.lote = lotes_almacenados.idlotealmacenado AND
+detallesalidas.caja = $P{numCaja} and Salidas.idsalida = $P{numSalida}
+GROUP BY
+productosbase.codigobarras,lotes_almacenados.NUMEROLOTE
+ORDER BY
+productosbase.descripcion ASC]]>
+	</queryString>
+	<field name="plu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigobarras" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUMEROLOTE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHAVENCE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="operador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PuntodeEntrega" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="77" splitType="Stretch">
+			<frame>
+				<reportElement uuid="cf5b376f-f65f-408e-9d50-c5910f432283" x="0" y="0" width="500" height="77"/>
+				<textField>
+					<reportElement uuid="09f2a271-c842-4436-bb40-1c3452223a90" x="174" y="2" width="326" height="75"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PUNTO DE ENTREGA: "+$F{PuntodeEntrega}+"\nCAJA No. "+$F{caja}]]></textFieldExpression>
+				</textField>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement uuid="5ccc8c3d-c003-449a-93fa-48fdaf4d9712" x="0" y="2" width="174" height="72"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<frame>
+				<reportElement uuid="57111bec-18bb-4691-bb96-684a7c502695" x="27" y="0" width="528" height="42"/>
+				<staticText>
+					<reportElement uuid="3cf8db9e-d88f-4710-931e-b90d5a1667b2" x="0" y="0" width="157" height="20"/>
+					<textElement>
+						<font size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[ESTA CAJA CONTIENE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="cfe6192c-589b-4f15-90a5-0f8dae7cd2c0" x="0" y="21" width="40" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[PLU]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="5e057358-c2fd-430a-9f2e-58a39629bda2" x="268" y="22" width="60" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[LOTE No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="996ab3c0-10c0-479d-b457-e2ece44153cb" x="40" y="20" width="232" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[DESCRIPCION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="52d5ff03-95f1-4c23-95c7-fd33f8f8e92b" x="328" y="19" width="68" height="21"/>
+					<textElement textAlignment="Center">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[FECHA VENCIMIENTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="106c2fd7-b5e4-4f06-a17d-08dc1e553fd6" x="399" y="22" width="42" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4194dc46-96f9-48bc-bd77-4e4baf035cf4" x="456" y="20" width="69" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[Empacado por]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<frame>
+				<reportElement uuid="d2bbee7e-1746-4035-ad66-ba52f85535a3" x="26" y="0" width="531" height="14"/>
+				<rectangle>
+					<reportElement uuid="de0d1a52-4594-4815-969f-bda2539abb86" x="0" y="0" width="529" height="14"/>
+					<graphicElement>
+						<pen lineColor="#999999"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement uuid="f250f625-41c5-40d0-82ea-eee608d2c6d8" x="0" y="0" width="40" height="14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{plu}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="e8a4cf69-7032-4164-b0ff-c3fb986e3ad8" x="273" y="0" width="65" height="14"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NUMEROLOTE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="750c2cfd-e495-451b-b390-4948fddeb0b2" x="40" y="0" width="232" height="14"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMM-yyyy">
+					<reportElement uuid="4ddfba6f-e98f-4638-93e1-2ac425ba6d34" x="338" y="0" width="57" height="14"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FECHAVENCE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement uuid="4e7812a0-c484-4820-9fc3-df4949aaf3f6" x="396" y="0" width="44" height="14"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="476557ec-701b-4d9b-95d1-7d61a33a961e" x="441" y="0" width="88" height="14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{operador}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement uuid="831015ae-1f5f-4278-b0de-c1025b1dfb47" x="4" y="0" width="22" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

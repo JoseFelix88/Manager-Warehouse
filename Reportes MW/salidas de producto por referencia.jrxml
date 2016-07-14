@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salidas de producto por referencia" language="groovy" pageWidth="360" pageHeight="400" columnWidth="360" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b5ba437d-2c53-48ef-9f39-caacab04546a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="referencia producto" uuid="aa4dc72c-e6bf-4918-85a0-eff3562d4506">
+		<parameter name="codigoplu" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="idsalida" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+lotes_almacenados.fechavence,
+lotes_almacenados.NUMEROLOTE,
+detallesalidas.cantidad,
+detallesalidas.caja,
+detallesalidas.operador FROM detallesalidas
+INNER JOIN lotes_almacenados ON detallesalidas.lote = lotes_almacenados.idlotealmacenado
+INNER JOIN productosbase ON detallesalidas.producto = productosbase.codigobarras
+INNER JOIN salidas ON detallesalidas.salida = salidas.idsalida WHERE salidas.idsalida = $P{idsalida} and productosbase.plu = $P{codigoplu} group by detallesalidas.iddetallesalida,lotes_almacenados.NUMEROLOTE ORDER BY   detallesalidas.caja]]>
+		</queryString>
+		<field name="fechavence" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="NUMEROLOTE" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="cantidad" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="caja" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="operador" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="codplu" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="salida" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+now()]]>
+	</queryString>
+	<field name="now()" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="21">
+			<componentElement>
+				<reportElement uuid="be762163-5ec6-460c-99aa-c80da14dfe87" key="table" style="table" x="33" y="2" width="323" height="19"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="referencia producto" uuid="1f1a5ee0-3633-4feb-83b1-a5570f9de929">
+						<datasetParameter name="codigoplu">
+							<datasetParameterExpression><![CDATA[$P{codplu}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="idsalida">
+							<datasetParameterExpression><![CDATA[$P{salida}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="79" uuid="ef8d852e-2c8f-427c-acc5-75f0226dbc78">
+						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
+							<staticText>
+								<reportElement uuid="c2b051bc-6a2a-4392-a95e-7e04f5b43b2c" x="0" y="0" width="79" height="11"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Lote No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+							<textField>
+								<reportElement uuid="9fe34c74-779a-48b8-9b0a-4a99d86e8ec6" x="0" y="0" width="79" height="11"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{NUMEROLOTE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="72" uuid="3dbcffe3-420d-4ebf-93df-1e255078d8c0">
+						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
+							<staticText>
+								<reportElement uuid="e50ec4a1-5add-4ed4-8b07-a54655b62ff1" x="0" y="0" width="72" height="11"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[F.V]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+							<textField pattern="MMMMM-yyyy">
+								<reportElement uuid="b9c5fdf2-0473-4de2-9399-19020d70ce8f" x="0" y="0" width="72" height="11"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fechavence}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="56" uuid="0b28f757-0784-4a5d-9d99-d7056cd4be7d">
+						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
+							<staticText>
+								<reportElement uuid="086d910e-2afb-438f-88de-3b0cb70dcfdb" x="0" y="0" width="53" height="11"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Cantidad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="57ec01dd-42b3-49a6-8206-6ea51d1a920d" x="0" y="0" width="53" height="11"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="38" uuid="f823e9e1-d6ff-4796-a796-67b25c44159c">
+						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
+							<staticText>
+								<reportElement uuid="ad47f4ff-5969-42ef-a7e0-a64f9df08e95" x="0" y="0" width="38" height="11"/>
+								<textElement textAlignment="Center">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Caja ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+							<textField>
+								<reportElement uuid="33515ac4-8db0-499a-b6ef-d8fde8ed7c8f" x="0" y="0" width="38" height="11"/>
+								<textElement textAlignment="Center">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{caja}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>
