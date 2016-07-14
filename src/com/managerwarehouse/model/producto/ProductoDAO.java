@@ -619,4 +619,36 @@ public class ProductoDAO extends database implements crud<ProductoDTO> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Lotealmacenado leerlotealmacenado(Object key) {
+        Lotealmacenado lote = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        String SQL = "SELECT\n"
+                + "lotes_almacenados.CODIGOBARRAS,\n"
+                + "lotes_almacenados.NUMEROLOTE,\n"
+                + "lotes_almacenados.FECHAVENCE,\n"
+                + "lotes_almacenados.STOCKLOTE,\n"
+                + "lotes_almacenados.PLU,\n"
+                + "lotes_almacenados.idlotealmacenado\n"
+                + "FROM `lotes_almacenados` where codigobarras = ?";
+        try {
+            ps = getConnection().prepareStatement(SQL);
+            ps.setObject(1, key);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                lote = new Lotealmacenado();
+                lote.setCodigoProducto(rs.getString("codigobarras"));
+                lote.setNumerolote(rs.getString("numerolote"));
+                lote.setFecha_vencimiento(rs.getDate("fechavence"));
+                lote.setStocklote(rs.getInt("stocklote"));
+                lote.setIdlotealmacenado(rs.getInt("idlotealmacenado"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error al momento de consultar el Lote: " + e);
+        }
+
+        return lote;
+    }
+
 }
