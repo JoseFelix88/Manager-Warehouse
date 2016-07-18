@@ -527,44 +527,7 @@ public class ProductoDAO extends database implements crud<ProductoDTO> {
     Edicion edicion = new Edicion();
 
     public Object[][] lotesalmacenados(Object key) {
-        /* List<Object> list = null;
-         Lotealmacenado lote;
-         PreparedStatement ps;
-         ResultSet rs;
-         String SQL = "SELECT\n"
-         + "lotes_almacenados.idlotealmacenado,\n"
-         + "lotes_almacenados.CODIGOBARRAS,\n"
-         + "lotes_almacenados.PLU,\n"
-         + "lotes_almacenados.DESCRIPCION,\n"
-         + "lotes_almacenados.NUMEROLOTE,\n"
-         + "lotes_almacenados.FECHAVENCE,\n"
-         + "lotes_almacenados.STOCKLOTE\n"
-         + "FROM `lotes_almacenados`\n"
-         + "WHERE\n"
-         + "lotes_almacenados.CODIGOBARRAS = ? OR\n"
-         + "lotes_almacenados.PLU = ? AND\n"
-         + "lotes_almacenados.STOCKLOTE > 0";
-         try {
-         ps = getConnection().prepareStatement(SQL);
-         ps.setObject(1, key);
-         ps.setObject(2, key);
-
-         rs = ps.executeQuery();
-         list = new ArrayList<>();
-         while (rs.next()) {
-         lote = new Lotealmacenado();
-         lote.setIdlotealmacenado(rs.getInt("idlotealmacenado"));
-         lote.setCodigoProducto(rs.getString("codigobarras"));
-         lote.setNumerolote(rs.getString("numerolote"));
-         lote.setFecha_vencimiento(rs.getDate("fechavence"));
-         lote.setStocklote(rs.getInt("stocklote"));
-         list.add(lote);
-         }
-         } catch (Exception e) {
-         edicion.mensajes(3, "IMPOSIBLE CARGAR LOS LOTES ALMACENADOS.\n" + e);
-         }
-         return list;*/
-
+       
         Object[][] rs = select("lotes_almacenados",
                 "lotes_almacenados.idlotealmacenado,\n"
                 + "lotes_almacenados.CODIGOBARRAS,\n"
@@ -575,7 +538,6 @@ public class ProductoDAO extends database implements crud<ProductoDTO> {
                 + "lotes_almacenados.PLU = '" + key + "') AND\n"
                 + "lotes_almacenados.STOCKLOTE >= 1 "
                 + "group by lotes_almacenados.NUMEROLOTE, lotes_almacenados.CODIGOBARRAS order by fechavence");
-
         return rs;
     }
 

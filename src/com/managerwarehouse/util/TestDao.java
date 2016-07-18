@@ -39,7 +39,7 @@ public class TestDao {
         Lotealmacenado lotesalmacenado = producto.leerlotealmacenado("7703145001262");
         NoficacionesProductos np = new NoficacionesProductos();
         System.out.println("F.V Producto: " + lotesalmacenado.getFecha_vencimiento());
-        System.out.println( np.Alerta_Vencimiento(lotesalmacenado.getFecha_vencimiento()));
+        System.out.println(DateUtil.newDateTime());
         Edicion edicion = new Edicion();
 //        edicion.mensajes(1, "");
         /* SalidaDAO dAO = new SalidaDAO();
