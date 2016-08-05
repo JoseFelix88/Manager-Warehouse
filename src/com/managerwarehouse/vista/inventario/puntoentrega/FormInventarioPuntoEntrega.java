@@ -1,10 +1,13 @@
 package com.managerwarehouse.vista.inventario.puntoentrega;
 
+import com.managerwarehouse.controlador.index.ControllerContenedor;
 import com.managerwarehouse.model.inventario.puntoentrega.InventarioPuntoEntregaDAO;
 import com.managerwarehouse.model.puntoentrega.PuntoEntrega;
 import com.managerwarehouse.model.puntoentrega.PuntoEntregaDAO;
 import com.managerwarehouse.util.Edicion;
 import com.managerwarehouse.util.reportes.GenerarReporte;
+import java.beans.PropertyVetoException;
+import javax.swing.JInternalFrame;
 
 public class FormInventarioPuntoEntrega extends javax.swing.JInternalFrame {
 
@@ -68,6 +71,11 @@ public class FormInventarioPuntoEntrega extends javax.swing.JInternalFrame {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/busqueda-de-grafico-circular-icono-5421-32.png"))); // NOI18N
@@ -162,20 +170,20 @@ public class FormInventarioPuntoEntrega extends javax.swing.JInternalFrame {
         TB_detalleInventarioPunto.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         TB_detalleInventarioPunto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Plu", "Descripcion", "Inv. Inicial", "Entrada", "Dv. Paciente", "Salidas", "Dv. Bodega", "Sal. Autorizada", "Inv. Final", "Inv. Fisico", "Sobrante", "Faltantes"
+                "Plu", "Descripcion", "Inv. Inicial", "Entrada", "Dv. Paciente", "Salidas", "Dv. Bodega", "Sal. Autorizada", "Inv. Final", "Inv. Fisico", "Sobrante", "Faltantes", "inv"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -264,6 +272,27 @@ public class FormInventarioPuntoEntrega extends javax.swing.JInternalFrame {
             gr.diferencia_inventario_puntoentrega(key);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JInternalFrame ji = validador.getJInternalFrame(FormCargarInventario.class.getName());
+        if (ji == null || ji.isClosed()) {
+            ji = new FormCargarInventario();
+            ControllerContenedor.getjDesktopPane1().add(ji, 0);
+            validador.addJIframe(FormCargarInventario.class.getName(), ji);
+            ji.setVisible(true);
+
+        } else {
+
+            ji.show(true);
+            try {
+                ji.setIcon(false);
+            } catch (PropertyVetoException ex) {
+
+            }
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JD_fecha1;
     private com.toedter.calendar.JDateChooser JD_fecha2;

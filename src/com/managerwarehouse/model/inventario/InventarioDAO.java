@@ -42,10 +42,10 @@ public class InventarioDAO extends database {
                 "productosbase.plu,\n"
                 + "productosbase.descripcion,\n"
                 + "saldo_fisico_puntoentrega_inventario_general(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "') AS Stock_puntoentrega,\n"
-                + "conteo_fisico_bodega(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "' ) AS stock_bodega,\n"
+                + "IF(conteo_fisico_bodega(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "' ) = 0,stocktotallotesalmacenados(productosbase.plu),conteo_fisico_bodega(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "' )) AS stock_bodega,\n"
                 + "consumo_puntoentrega_inventario_general(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "' )  AS Salidas_En_PuntosEntrega,\n"
                 + "saldo_fisico_puntoentrega_inventario_general(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "') +\n"
-                + "conteo_fisico_bodega(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "') AS Stock_Total ",
+                + "IF(conteo_fisico_bodega(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "' ) = 0,stocktotallotesalmacenados(productosbase.plu),conteo_fisico_bodega(productosbase.plu,'" + key[0] + "' ,'" + key[1] + "' )) AS Stock_Total ",
                 null);
 
         return rs;
