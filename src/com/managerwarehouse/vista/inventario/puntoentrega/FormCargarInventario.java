@@ -2,13 +2,24 @@ package com.managerwarehouse.vista.inventario.puntoentrega;
 
 import com.managerwarehouse.util.CargarArchivo;
 import com.managerwarehouse.util.Edicion;
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 public class FormCargarInventario extends javax.swing.JInternalFrame {
 
     CargarArchivo cargarArchivo = null;
     Edicion edicion = new Edicion();
+
     public FormCargarInventario() {
         initComponents();
     }
@@ -242,13 +253,7 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cargarArchivo = new CargarArchivo();
-        Vector archivocargado = cargarArchivo.MONTAR_ARCHIVO_EN_TABLA();
-        if ( archivocargado != null) {
-            edicion.limpiar_tablas(TB_DetalleInventario);
-            DefaultTableModel tableModel = (DefaultTableModel) TB_DetalleInventario.getModel();
-            tableModel.addRow(archivocargado);
-        }
+        CARGAR_INVENTARIO();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -274,4 +279,65 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtnuminventario;
     private javax.swing.JTextField txtruta;
     // End of variables declaration//GEN-END:variables
+
+    JFileChooser fileChooser = new JFileChooser();
+    Workbook wbook;
+
+    private void CARGAR_INVENTARIO() {
+
+        File archivo = new File("Z://");
+        fileChooser.setCurrentDirectory(archivo);
+        int answer = fileChooser.showDialog(null, "Importar");
+
+        if (answer == JFileChooser.APPROVE_OPTION) {
+
+            archivo = fileChooser.getSelectedFile();
+
+            if (archivo != null) {
+
+                createTableModel(archivo);
+
+            }
+
+        }
+
+    }
+
+    private void createTableModel(File archivo) {
+        edicion.limpiar_tablas(TB_DetalleInventario);
+        try {
+            Vector columna = new Vector();
+            Vector fila = new Vector();
+            wbook = Workbook.getWorkbook(archivo);
+            final Sheet hoja = wbook.getSheet(0);
+            columna.clear();
+            for (int i = 0; i < hoja.getColumns(); i++) {
+
+                Cell cell1 = hoja.getCell(i, 0);
+
+                columna.add(cell1.getContents());
+
+            }
+            fila.clear();
+            for (int j = 1; j < hoja.getRows(); j++) {
+
+                Vector d = new Vector();
+
+                for (int i = 0; i < hoja.getColumns(); i++) {
+
+                    Cell cell = hoja.getCell(i, j);
+                    d.add(cell.getContents());
+
+                }
+                d.add("\n");
+                fila.add(d);
+                DefaultTableModel temp = (DefaultTableModel) TB_DetalleInventario.getModel();
+                temp.addRow(d);
+
+            }
+
+        } catch (IOException | BiffException | IndexOutOfBoundsException ex) {
+        }
+    }
+
 }
