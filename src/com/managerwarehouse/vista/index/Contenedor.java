@@ -151,6 +151,7 @@ public class Contenedor extends javax.swing.JFrame {
         JM_conteofisico = new javax.swing.JMenuItem();
         JM_SalidaAutorizada = new javax.swing.JMenuItem();
         JM_inventariobodega = new javax.swing.JMenuItem();
+        JM_pedidosugerido = new javax.swing.JMenuItem();
         JM_ConsumoSaldoGeneral = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         JM_inventariopunto = new javax.swing.JMenuItem();
@@ -392,6 +393,19 @@ public class Contenedor extends javax.swing.JFrame {
         });
         jMenu5.add(JM_inventariobodega);
 
+        JM_pedidosugerido.setBackground(new java.awt.Color(51, 51, 51));
+        JM_pedidosugerido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        JM_pedidosugerido.setForeground(new java.awt.Color(255, 153, 0));
+        JM_pedidosugerido.setText("Pedido Sugerido");
+        JM_pedidosugerido.setActionCommand("pedidosugerido");
+        JM_pedidosugerido.setOpaque(true);
+        JM_pedidosugerido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JM_pedidosugeridoActionPerformed(evt);
+            }
+        });
+        jMenu5.add(JM_pedidosugerido);
+
         JM_ConsumoSaldoGeneral.setBackground(new java.awt.Color(51, 51, 51));
         JM_ConsumoSaldoGeneral.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         JM_ConsumoSaldoGeneral.setForeground(new java.awt.Color(255, 153, 0));
@@ -542,6 +556,10 @@ public class Contenedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JM_DevolucionProveedorActionPerformed
 
+    private void JM_pedidosugeridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JM_pedidosugeridoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JM_pedidosugeridoActionPerformed
+
     private void Obtener_Eventos_De_SubMenu(javax.swing.JMenuItem SubMenu) {
         SubMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evento) {
@@ -635,6 +653,7 @@ public class Contenedor extends javax.swing.JFrame {
     public javax.swing.JMenuItem JM_inventariobodega;
     public javax.swing.JMenuItem JM_inventariopunto;
     public javax.swing.JMenuItem JM_pedidoPunto;
+    public javax.swing.JMenuItem JM_pedidosugerido;
     public javax.swing.JMenuItem JM_trasladoproducto;
     private javax.swing.JMenu Menu_Empleado;
     public static javax.swing.JDesktopPane Panel_Contenedor;

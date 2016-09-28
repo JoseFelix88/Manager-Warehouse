@@ -1,5 +1,8 @@
 package com.managerwarehouse.vista.inventario.puntoentrega;
 
+import com.managerwarehouse.model.inventario.puntoentrega.CargarInventarioDao;
+import com.managerwarehouse.model.puntoentrega.PuntoEntrega;
+import com.managerwarehouse.model.puntoentrega.PuntoEntregaDAO;
 import com.managerwarehouse.util.CargarArchivo;
 import com.managerwarehouse.util.Edicion;
 import java.io.File;
@@ -19,9 +22,16 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
 
     CargarArchivo cargarArchivo = null;
     Edicion edicion = new Edicion();
+    JFileChooser fileChooser = new JFileChooser();
+    Workbook wbook;
+    CargarInventarioDao CargaDao;
+    PuntoEntregaDAO puntoDao;
 
     public FormCargarInventario() {
+        puntoDao = new PuntoEntregaDAO();
+        CargaDao = new CargarInventarioDao();
         initComponents();
+        llenarcombos();
     }
 
     @SuppressWarnings("unchecked")
@@ -39,15 +49,15 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtruta = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TB_DetalleInventario = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TB_DetalleInventario = new javax.swing.JTable();
 
         setTitle("Cargar Inventario");
 
@@ -79,38 +89,6 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
             }
         });
 
-        jToolBar1.setRollover(true);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar-nuevo-documento-de-archivo-mas-icono-6249-32.png"))); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Guardar.png"))); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Buscar.png"))); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cerrar.png"))); // NOI18N
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/exit.png"))); // NOI18N
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton6);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,7 +106,6 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtnuminventario, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(combopuntoentrega, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,15 +117,10 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtruta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)
-                                .addGap(16, 16, 16))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addComponent(txtruta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(16, 16, 16))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,9 +143,7 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Inventario", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI Light", 0, 18))); // NOI18N
@@ -186,7 +156,7 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "PLU", "DESCRIPCIÓN", "INV. INICIAL", "ENTRADAS", "DEV. ENTRADA", "SALIDAS", "DEV. SALIDAS", "SAL. AUTO", "INV. FINAL", "INV. FISICO", "SOBRANTE", "FALTANTE"
+                "PLU", "DESCRIPCIÓN", "INV. INICIAL", "ENTRADAS", "DEV. ENTRADA", "SALIDAS", "DEV. SALIDAS", "SAL. AUTO", "INV. FINAL", "INV. FISICO", "SOBRANTE ", "FALTANTE"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -218,13 +188,60 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 414, Short.MAX_VALUE)
+            .addGap(0, 291, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
+
+        jToolBar1.setRollover(true);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar-nuevo-documento-de-archivo-mas-icono-6249-32.png"))); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton2);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Guardar.png"))); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Buscar.png"))); // NOI18N
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton4);
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cerrar.png"))); // NOI18N
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton5);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/exit.png"))); // NOI18N
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,21 +249,28 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(301, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(188, 188, 188))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 63, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(188, 188, 188))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -255,6 +279,19 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CARGAR_INVENTARIO();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        registrarInventario();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        llenarcombos();
+        edicion.limpiar_tablas(TB_DetalleInventario);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -280,27 +317,26 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtruta;
     // End of variables declaration//GEN-END:variables
 
-    JFileChooser fileChooser = new JFileChooser();
-    Workbook wbook;
+    private void llenarcombos() {
+        combopuntoentrega.removeAllItems();
+        combopuntoentrega.addItem(null);
+        for (PuntoEntrega readAll : puntoDao.readAll()) {
+            combopuntoentrega.addItem(readAll.getNombre());
+        }
+        txtnuminventario.setText(CargaDao.NUMERO_CARGA().toString());
+    }
 
     private void CARGAR_INVENTARIO() {
 
-        File archivo = new File("Z://");
+        File archivo = new File("D:\\BODEGA\\INVENTARIOS");
         fileChooser.setCurrentDirectory(archivo);
         int answer = fileChooser.showDialog(null, "Importar");
-
         if (answer == JFileChooser.APPROVE_OPTION) {
-
             archivo = fileChooser.getSelectedFile();
-
             if (archivo != null) {
-
                 createTableModel(archivo);
-
             }
-
         }
-
     }
 
     private void createTableModel(File archivo) {
@@ -312,22 +348,15 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
             final Sheet hoja = wbook.getSheet(0);
             columna.clear();
             for (int i = 0; i < hoja.getColumns(); i++) {
-
                 Cell cell1 = hoja.getCell(i, 0);
-
                 columna.add(cell1.getContents());
-
             }
             fila.clear();
             for (int j = 1; j < hoja.getRows(); j++) {
-
                 Vector d = new Vector();
-
                 for (int i = 0; i < hoja.getColumns(); i++) {
-
                     Cell cell = hoja.getCell(i, j);
                     d.add(cell.getContents());
-
                 }
                 d.add("\n");
                 fila.add(d);
@@ -337,7 +366,41 @@ public class FormCargarInventario extends javax.swing.JInternalFrame {
             }
 
         } catch (IOException | BiffException | IndexOutOfBoundsException ex) {
+            System.out.println("Error en la Carga del Archivo: " + ex);
         }
+    }
+
+    private void registrarInventario() {
+
+        int contador = 0;
+        int filas = TB_DetalleInventario.getRowCount();
+        String valuesdetalle = "", valuesEncabezado;
+        valuesEncabezado = txtnuminventario.getText() + ",'" + edicion.formatearFechaSQL(jdFechainicio.getDate()) + "',"
+                + "'" + edicion.formatearFechaSQL(jdFechaFinal.getDate()) + "'," + puntoDao.read(combopuntoentrega.getSelectedItem()).getIdpunto();
+        if (CargaDao.REGISTRAR_CARGA_ENCABEZADO(valuesEncabezado) != false) {
+
+            for (int i = 0; i < filas; i++) {
+                if (contador == (filas - 1)) {
+                    valuesdetalle = valuesdetalle + "(" + txtnuminventario.getText() + ",'" + TB_DetalleInventario.getValueAt(i, 0) + "'," + TB_DetalleInventario.getValueAt(i, 2) + ","
+                            + "" + TB_DetalleInventario.getValueAt(i, 3) + "," + TB_DetalleInventario.getValueAt(i, 4) + "," + TB_DetalleInventario.getValueAt(i, 5) + ","
+                            + "" + TB_DetalleInventario.getValueAt(i, 6) + "," + TB_DetalleInventario.getValueAt(i, 7) + "," + TB_DetalleInventario.getValueAt(i, 8) + ","
+                            + "" + TB_DetalleInventario.getValueAt(i, 9) + "," + TB_DetalleInventario.getValueAt(i, 10) + "," + TB_DetalleInventario.getValueAt(i, 11) + ");";
+                    System.out.println("dentro de if - for" + valuesdetalle);
+                    if (CargaDao.REGISTRAR_CARGA_DETALLE(valuesdetalle) == true) {
+                        edicion.mensajes(2, "inventario cargado correctamente.");
+                    } else {
+                        edicion.mensajes(3, "inventario no fue cargado correctamente.");
+                    }
+                }
+                valuesdetalle = valuesdetalle + "(" + txtnuminventario.getText() + ",'" + TB_DetalleInventario.getValueAt(i, 0) + "'," + TB_DetalleInventario.getValueAt(i, 2) + ","
+                        + "" + TB_DetalleInventario.getValueAt(i, 3) + "," + TB_DetalleInventario.getValueAt(i, 4) + "," + TB_DetalleInventario.getValueAt(i, 5) + ","
+                        + "" + TB_DetalleInventario.getValueAt(i, 6) + "," + TB_DetalleInventario.getValueAt(i, 7) + "," + TB_DetalleInventario.getValueAt(i, 8) + ","
+                        + "" + TB_DetalleInventario.getValueAt(i, 9) + "," + TB_DetalleInventario.getValueAt(i, 10) + "," + TB_DetalleInventario.getValueAt(i, 11) + "),\n";
+                contador++;
+            }
+
+        }
+
     }
 
 }

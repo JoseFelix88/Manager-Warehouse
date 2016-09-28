@@ -6,11 +6,15 @@ import com.managerwarehouse.model.inventario.puntoentrega.PedidoPuntoEntregaDAO;
 import com.managerwarehouse.model.producto.ProductoDAO;
 import com.managerwarehouse.model.puntoentrega.PuntoEntrega;
 import com.managerwarehouse.model.puntoentrega.PuntoEntregaDAO;
+import com.managerwarehouse.util.DateUtil;
 import com.managerwarehouse.util.Edicion;
 import com.managerwarehouse.util.reportes.GenerarReporte;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
 
@@ -54,12 +58,6 @@ public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TB_detallepedido = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
-        txtplu = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtdescripcion = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtcantdespacho = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -170,7 +168,7 @@ public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(240, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -238,20 +236,20 @@ public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
         TB_detallepedido.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         TB_detallepedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "PLU", "DESCRIPCIÓN", "CONSUMO", "SALDO FISICO", "SUGERIDO", "STOCK MENSUAL", "C. DESPACHADA", "C. PENDIENTE"
+                "PLU", "DESCRIPCIÓN", "CONSUMO", "SALDO FISICO", "SUGERIDO", "STOCK MENSUAL", "C. DESPACHADA", "C. PENDIENTE", "STOCK BODEGA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -270,78 +268,42 @@ public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
             TB_detallepedido.getColumnModel().getColumn(1).setMinWidth(250);
         }
 
-        jLabel7.setText("PLU");
-
-        jLabel8.setText("DESCRIPCIÓN");
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("CANT. DESPACHADA");
-
-        txtcantdespacho.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtcantdespacho.setText("0");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(txtplu, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtcantdespacho, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                .addGap(123, 123, 123))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(199, 199, 199)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(203, 203, 203)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtplu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcantdespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(338, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(35, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(14, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(255, 255, 255))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -404,12 +366,14 @@ public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
         Object key = edicion.msjQuest(2, "ingresa el numero del pedido.");
         PedidoPuntoEntrega ppe = ipedao.consultarpedidopunto(key);
         if (ppe != null) {
-            txtnumpepido.setText("" + ppe.getNumpedido());
-            combopuntoentrega.setSelectedItem(ppe.getPuntoEntrega().getNombre());
-            txtporcentaje.setText(ppe.getPorcenvio());
-            JD_fecha1.setDate(edicion.CambiarTipoFecha(ppe.getFechaini()));
-            JD_fecha2.setDate(edicion.CambiarTipoFecha(ppe.getFechafin()));
-            edicion.llenarTabla(TB_detallepedido, ipedao.DetallePedido(key));
+            
+                txtnumpepido.setText("" + ppe.getNumpedido());
+                combopuntoentrega.setSelectedItem(ppe.getPuntoEntrega().getNombre());
+                txtporcentaje.setText(ppe.getPorcenvio());
+                //JD_fecha1.setDate(DateUtil.getDate(ppe.getFechaini().toString()));
+                //JD_fecha2.setDate(DateUtil.getDate(ppe.getFechafin()));
+                edicion.llenarTabla(TB_detallepedido, ipedao.DetallePedido(key));
+            
         } else {
             edicion.mensajes(1, "el pedido aun no hasido registrado.");
         }
@@ -433,18 +397,12 @@ public class FormPedidoPuntoEntrega extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTextField txtcantdespacho;
-    private javax.swing.JTextField txtdescripcion;
     private javax.swing.JTextField txtnumpepido;
-    private javax.swing.JTextField txtplu;
     private javax.swing.JTextField txtporcentaje;
     // End of variables declaration//GEN-END:variables
 

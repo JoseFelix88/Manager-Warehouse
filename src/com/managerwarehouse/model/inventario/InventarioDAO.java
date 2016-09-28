@@ -51,6 +51,25 @@ public class InventarioDAO extends database {
         return rs;
     }
 
+    public Object[][] CALCULO_PEDIDO_SUGERIDO(Object[] key) {
+        Object[][] rs = select("productosbase\n"
+                + "GROUP BY\n"
+                + "productosbase.plu\n"
+                + "ORDER BY\n"
+                + "productosbase.descripcion ASC", "productosbase.plu,\n"
+                + "productosbase.descripcion,\n"
+                + "saldo_fisico_puntoentrega_inventario_general(productosbase.plu,'" + key[0] + "' , '" + key[1] + "') AS Stock_puntoentrega,\n"
+                + "STOCK_GENERAL_BODEGA (productosbase.plu,'" + key[0] + "' , '" + key[1] + "')AS stock_bodega,\n"
+                + "STOCK_GENERAL(productosbase.plu,'" + key[0] + "' , '" + key[1] + "') AS STOCK_GENERAL,\n"
+                + "PROMEDIO_SALIDA_PUNTOENTREGA(productosbase.plu,'" + key[2] + "' , '" + key[3] + "') AS PROMEDIO_SALIDA_PUNTOENTREGA,\n"
+                + "PEDIDO_SUGERIDO_PROVEEDOR(STOCK_GENERAL(productosbase.plu,'" + key[0] + "' , '" + key[1] + "'),"
+                + "PROMEDIO_SALIDA_PUNTOENTREGA(productosbase.plu,'" + key[2] + "' , '" + key[3] + "') ," + key[4] + ") AS PEDIDO_SUGERIDO,"
+                + "COSTE_NETO_PRODUCTO(productosbase.plu) AS COSTO_UNIDAD,\n"
+                + "PEDIDO_SUGERIDO_PROVEEDOR(STOCK_GENERAL(productosbase.plu,'" + key[0] + "' , '" + key[1] + "'),"
+                + "PROMEDIO_SALIDA_PUNTOENTREGA(productosbase.plu,'" + key[2] + "' , '" + key[3] + "') ," + key[4] + ") * COSTE_NETO_PRODUCTO(productosbase.plu) AS COSTO_TOTAL" + "", null);
+        return rs;
+    }
+
     public Object[][] Monitor_Consumos_SaldosFinales(Object[] key) {
 
         Object[][] rs = select("puntos,productosbase",

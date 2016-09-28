@@ -11,6 +11,7 @@ import com.managerwarehouse.vista.index.Contenedor;
 import com.managerwarehouse.vista.inventario.bodega.FormConsumoSaldoGeneral;
 import com.managerwarehouse.vista.inventario.bodega.FormConteoFisicoBodega;
 import com.managerwarehouse.vista.inventario.bodega.FormInventarioBodega;
+import com.managerwarehouse.vista.inventario.bodega.FormPedidoSugerido;
 import com.managerwarehouse.vista.inventario.puntoentrega.FormConsumoSaldoPunto;
 import com.managerwarehouse.vista.inventario.puntoentrega.FormInventarioPuntoEntrega;
 import com.managerwarehouse.vista.inventario.puntoentrega.FormPedidoPuntoEntrega;
@@ -56,6 +57,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
     FormOrdenCompra formOrdenCompra;
     FormTrasladoMercancias formTrasladoMercancias;
     FormDevolucionProveedor formDevolucionProveedor;
+    FormPedidoSugerido formPedidoSugerido;
 
     private static JDesktopPane jDesktopPane1;
 
@@ -90,6 +92,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
             Obtener_Eventos_De_SubMenu(contenedor.JM_OrdenCompra);
             Obtener_Eventos_De_SubMenu(contenedor.JM_trasladoproducto);
             Obtener_Eventos_De_SubMenu(contenedor.JM_DevolucionProveedor);
+            Obtener_Eventos_De_SubMenu(contenedor.JM_pedidosugerido);
             contenedor.JM_Profile.setText(Variables_Gloabales.EMPLEADO.getNombreCompleto());
         } else {
             contenedor.setVisible(true);
@@ -177,7 +180,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
                 } else {
                     formDevolucionPunto.setIcon(false);
                 }
-               break;
+                break;
             case "Salida Autorizada":
                 if (Obtener_Estado_Formulario(this.formSalidasAutorizada, Contenedor.Panel_Contenedor)) {
                     formSalidasAutorizada = new FormSalidasAutorizada();
@@ -339,6 +342,20 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
                             (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
                 } else {
                     formDevolucionProveedor.setIcon(false);
+                }
+
+                break;
+            case "pedidosugerido":
+                if (Obtener_Estado_Formulario(this.formPedidoSugerido, Contenedor.Panel_Contenedor)) {
+                    formPedidoSugerido = new FormPedidoSugerido();
+                    formPedidoSugerido.show();
+                    Contenedor.Panel_Contenedor.add(formPedidoSugerido);
+                    java.awt.Dimension Tamaño_Panel = Contenedor.Panel_Contenedor.getSize();
+                    java.awt.Dimension Tamaño_InternalFrame = formPedidoSugerido.getSize();
+                    formPedidoSugerido.setLocation((Tamaño_Panel.width - Tamaño_InternalFrame.width) / 2,
+                            (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
+                } else {
+                    formPedidoSugerido.setIcon(false);
                 }
 
                 break;

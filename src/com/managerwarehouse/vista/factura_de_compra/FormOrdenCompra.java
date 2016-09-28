@@ -36,9 +36,9 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         llenarcombo();
         AutoCompleteDecorator.decorate(combodescripcion);
         combodescripcion.getEditor().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
+                txtprecio.setText("$ 0");
                 consultaproducto();
 
             }
@@ -60,8 +60,6 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         comboproveedor = new javax.swing.JComboBox();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -75,6 +73,8 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         txtprecio = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtstockactual = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtprecioventa = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TB_DetalleOrden = new javax.swing.JTable();
@@ -145,20 +145,6 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(jButton1);
-
-        jButton2.setBackground(new java.awt.Color(102, 153, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/articulo-icono-9036-32.png"))); // NOI18N
-        jButton2.setToolTipText("Actualizar");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton2);
-        jToolBar1.add(jSeparator1);
 
         jButton4.setBackground(new java.awt.Color(102, 153, 255));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compras-icono-7322-32.png"))); // NOI18N
@@ -283,6 +269,17 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         txtstockactual.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txtstockactual.setText("0");
 
+        jLabel10.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel10.setText("$ DE VENTA");
+
+        txtprecioventa.setEditable(false);
+        txtprecioventa.setBackground(new java.awt.Color(102, 102, 255));
+        txtprecioventa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtprecioventa.setForeground(new java.awt.Color(255, 255, 255));
+        txtprecioventa.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txtprecioventa.setText("$ 0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -304,8 +301,18 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
                                 .addGap(97, 97, 97)
                                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtprecioventa, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -313,13 +320,7 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -344,7 +345,11 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtstockactual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtprecioventa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9))
         );
@@ -613,12 +618,14 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
 
     private void txtpluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpluActionPerformed
         // TODO add your handling code here:
+        txtprecio.setText("$ 0");
         ProductoDTO dTO = productoDAO.read(txtplu.getText());
         CambiaFormatoTexto ft = new CambiaFormatoTexto();
         if (dTO != null) {
             cargarlista();
             combodescripcion.setSelectedItem(dTO.getDescripcion());
             txtstockactual.setText(ft.numerico(dTO.getCantidadActual()));
+            txtprecioventa.setText("$ " + ft.numerico(dTO.getPrecioVenta()));
             txtprecio.selectAll();
             txtprecio.requestFocus();
         } else {
@@ -654,10 +661,11 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
     private void TB_DetalleOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TB_DetalleOrdenMouseClicked
         try {
             if (evt.getClickCount() > 0) {
+                CambiaFormatoTexto cft = new CambiaFormatoTexto();
                 int row = TB_DetalleOrden.getSelectedRow();
                 txtnumorden.setText(TB_DetalleOrden.getValueAt(row, 4).toString());
                 comboproveedor.setSelectedItem(TB_DetalleOrden.getValueAt(row, 0).toString());
-                txtprecio.setText("$ " + TB_DetalleOrden.getValueAt(row, 1).toString());
+                txtprecio.setText("$ " + cft.numerico(TB_DetalleOrden.getValueAt(row, 1).toString()));
             }
         } catch (Exception e) {
             System.out.println("error al cargar campos: " + e);
@@ -671,6 +679,7 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         txtplu.setText(null);
         combodescripcion.setSelectedItem(null);
         txtprecio.setText("$ " + 0);
+        txtprecioventa.setText("$ " + 0);
         edicion.limpiar_tablas(TB_DetalleOrden);
         edicion.limpiar_tablas(TB_historial);
         edicion.limpiar_tablas(TB_detalleCarritoCompra);
@@ -681,20 +690,6 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        if (validarordencompra() != false) {
-            if (verificaoferta() != null) {
-                if (compraDAO.gestionarOrden(2, compra) != true) {
-                    cargarlista();
-                    edicion.mensajes(2, "oferta modificada correctamente.");
-                }
-            } else {
-                edicion.mensajes(1, "oferta no se encuentra registrada.");
-            }
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void comboproveedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboproveedorItemStateChanged
         if (comboproveedor.getSelectedItem() != null) {
@@ -737,6 +732,7 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
                     }
                     if (compraDAO.GestionarCarritoCompra(0, compra) != true) {
                         cargarcarritocompra();
+                        txtprecio.setText("$ 0");
                         edicion.mensajes(2, "producto agregado al carrito correctamente.");
                     }
                 }
@@ -831,7 +827,6 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox combodescripcion;
     private javax.swing.JComboBox comboproveedor;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -839,6 +834,7 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -859,11 +855,11 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField txtnumorden;
     private javax.swing.JTextField txtplu;
     private javax.swing.JTextField txtprecio;
+    private javax.swing.JTextField txtprecioventa;
     private javax.swing.JTextField txtstockactual;
     private javax.swing.JTextField txtsubtotal;
     // End of variables declaration//GEN-END:variables
@@ -910,6 +906,8 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         Object[][] rs_historial = compraDAO.historialDeCompras(txtplu.getText());
         if (rs_historial != null) {
             edicion.llenarTabla(TB_historial, rs_historial);
+        } else {
+            edicion.limpiar_tablas(TB_historial);
         }
         if (rs_oferta != null) {
             edicion.llenarTabla(TB_DetalleOrden, rs_oferta);
@@ -951,6 +949,7 @@ public class FormOrdenCompra extends javax.swing.JInternalFrame {
         if (dTO != null) {
             txtplu.setText(dTO.getPlu());
             txtstockactual.setText(ft.numerico(dTO.getCantidadActual()));
+            txtprecioventa.setText("$ " + ft.numerico(dTO.getPrecioVenta()));
             txtprecio.selectAll();
             txtprecio.requestFocus();
             cargarlista();

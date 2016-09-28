@@ -19,7 +19,8 @@ public class PedidoPuntoEntregaDAO extends database {
         PuntoEntregaDAO pedao = new PuntoEntregaDAO();
         try {
 
-            Object[][] rs = select("pedidos_puntos", "numpedido, fechaemision, puntoentrega, fechaini, fechafin, porcenvio", "numpedido = " + key + "");
+            Object[][] rs = select("pedidos_puntos", "numpedido, fechaemision,"
+                    + " puntoentrega, fechaini, fechafin, porcenvio", "numpedido = " + key + "");
             if (rs.length > 0) {
 
                 ppe = new PedidoPuntoEntrega(edicion.toNumeroEntero(rs[0][0].toString()),
@@ -60,7 +61,8 @@ public class PedidoPuntoEntregaDAO extends database {
                 + "ROUND((consumo_puntoentre_inventario(productosbase.plu,'" + key[0] + "','" + key[1] + "','" + key[2] + "')+ "
                 + "(consumo_puntoentre_inventario(productosbase.plu,'" + key[0] + "','" + key[1] + "','" + key[2] + "') * " + porc_envio + "))/2) AS Pedido_1,"
                 + "ROUND((consumo_puntoentre_inventario(productosbase.plu,'" + key[0] + "','" + key[1] + "','" + key[2] + "') + \n"
-                + "(consumo_puntoentre_inventario(productosbase.plu,'" + key[0] + "','" + key[1] + "','" + key[2] + "') * " + porc_envio + "))/2) AS Pedido_2",
+                + "(consumo_puntoentre_inventario(productosbase.plu,'" + key[0] + "','" + key[1] + "','" + key[2] + "') * " + porc_envio + "))/2) AS Pedido_2,"
+                        + "stocktotallotesalmacenados(productosbase.plu)",
                 null);
 
         if (rs.length > 0) {
@@ -81,7 +83,7 @@ public class PedidoPuntoEntregaDAO extends database {
                 + "detalle_pedidos_puntos.cantdespachada,\n"
                 + "detalle_pedidos_puntos.cantpendiente", "pedidos_puntos.numpedido = detalle_pedidos_puntos.pedido AND\n"
                 + "detalle_pedidos_puntos.producto = productosbase.plu AND\n"
-                + "pedidos_puntos.numpedido = 5\n"
+                + "pedidos_puntos.numpedido = "+key+"\n"
                 + "GROUP BY\n"
                 + "productosbase.plu\n"
                 + "ORDER BY\n"
