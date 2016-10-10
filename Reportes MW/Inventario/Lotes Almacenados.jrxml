@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Lotes Almacenados" language="groovy" pageWidth="612" pageHeight="1008" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9a0891c8-d8e6-4dbe-8e3c-23e7b6c944f8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#999999"/>
+			<bottomPen lineWidth="0.5" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#999999"/>
+			<bottomPen lineWidth="0.5" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#999999"/>
+			<bottomPen lineWidth="0.5" lineColor="#999999"/>
+		</box>
+	</style>
+	<subDataset name="lotes" uuid="3d19a888-57e0-4b0c-9f2d-817cbe293c09">
+		<queryString>
+			<![CDATA[SELECT
+     productosbase.`codigobarras` AS productosbase_codigobarras,
+     productosbase.`plu` AS productosbase_plu,
+     productosbase.`descripcion` AS productosbase_descripcion,
+     lotes_almacenados.`NUMEROLOTE` AS lotes_almacenados_NUMEROLOTE,
+     lotes_almacenados.`FECHAVENCE` AS lotes_almacenados_FECHAVENCE,
+     lotes_almacenados.`STOCKLOTE` AS lotes_almacenados_STOCKLOTE
+FROM
+     `productosbase` productosbase INNER JOIN `lotes_almacenados` lotes_almacenados ON productosbase.`codigobarras` = lotes_almacenados.`CODIGOBARRAS`
+WHERE
+     lotes_almacenados.`STOCKLOTE` > 0 order by  productosbase.`descripcion`,
+ lotes_almacenados.`FECHAVENCE`]]>
+		</queryString>
+		<field name="productosbase_codigobarras" class="java.lang.String"/>
+		<field name="productosbase_plu" class="java.lang.String"/>
+		<field name="productosbase_descripcion" class="java.lang.String"/>
+		<field name="lotes_almacenados_NUMEROLOTE" class="java.lang.String"/>
+		<field name="lotes_almacenados_FECHAVENCE" class="java.sql.Date"/>
+		<field name="lotes_almacenados_STOCKLOTE" class="java.lang.Long"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT
+    now()]]>
+	</queryString>
+	<field name="now()" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="48" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="d9081452-b79d-44aa-b622-b188d257579e" key="table" style="table" x="15" y="0" width="360" height="48"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="lotes" uuid="25b67464-8fd7-4e78-b1ea-980f5f409e77">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="67" uuid="6fcbdabd-7847-4d99-b48e-ed1f1271b0a1">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5a163a6b-cbb5-4073-a323-270b4f71af1e" x="0" y="0" width="67" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[REFERENCIA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField>
+								<reportElement uuid="0a4f9ea7-32f8-4642-a9a5-36aa9028a581" x="0" y="0" width="67" height="17"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{productosbase_codigobarras}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="46" uuid="2ff51a75-5ad0-4e0f-be17-323f158e50a7">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1c30942e-4cf8-498e-a42f-08ce7ec080b6" x="0" y="0" width="46" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[PLU]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField>
+								<reportElement uuid="aaa44003-d796-42c1-9059-943bd53a5152" x="0" y="0" width="46" height="17"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{productosbase_plu}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="237" uuid="fe3e8f7f-3124-4405-b92d-b97d9e9b2c7c">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="c7dcf854-edeb-4c20-909d-22db2c888b0b" x="0" y="0" width="237" height="15"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[LOTES ALMACENADOS]]></text>
+							</staticText>
+							<textField pattern="dd/MM/yyyy h.mm a">
+								<reportElement uuid="1e5f1f28-d67c-47c2-ae2b-8b9bfb7f62c2" x="0" y="15" width="237" height="15"/>
+								<textElement textAlignment="Right">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+							</textField>
+						</jr:tableHeader>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="a2b07754-2e06-4e2f-9cb5-2c584cff8973" x="0" y="0" width="237" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="10" rowSpan="1">
+							<textField>
+								<reportElement uuid="b865317d-62bd-481b-b225-55392e60def1" x="156" y="0" width="54" height="10"/>
+								<textElement textAlignment="Right">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Report">
+								<reportElement uuid="e664a59e-7de1-444f-bc0c-15f37209573b" x="210" y="0" width="27" height="10"/>
+								<textElement>
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField>
+								<reportElement uuid="ef1d9d95-8301-4e40-a303-36e94bb4834e" x="0" y="0" width="237" height="17"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{productosbase_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="caf34642-29a8-44c8-81bd-935d9641823c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="25aea089-f602-405b-9625-7cd483e3d902" x="0" y="0" width="70" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[No. DE LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField>
+								<reportElement uuid="91c08fc4-f68b-48db-b0a3-a1def4be6bf9" x="0" y="0" width="70" height="17"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lotes_almacenados_NUMEROLOTE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="ba7c1198-a7a6-417f-a90a-0565dac45c5b">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f502c7d2-3bd8-410e-aa7e-c9614c79229a" x="0" y="0" width="60" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[FECHA DE VENCIMIENTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField pattern="MM-yyyy">
+								<reportElement uuid="9a8c0771-9b5a-4308-a777-0b1d55bca486" x="0" y="0" width="60" height="17"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lotes_almacenados_FECHAVENCE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="ee15aa5c-d1c4-49d9-bb2e-c63d2c20b2c4">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5f6c1d56-3efc-4dd3-999a-29d0f09639d6" x="0" y="0" width="70" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[STOCK LOTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="548a1976-dccd-4b59-8864-cbeecaf73b44" x="0" y="0" width="58" height="17"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lotes_almacenados_STOCKLOTE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

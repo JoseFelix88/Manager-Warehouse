@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salidas de producto" language="groovy" pageWidth="600" pageHeight="792" columnWidth="516" leftMargin="56" rightMargin="28" topMargin="28" bottomMargin="21" uuid="ec6b44ed-7564-45ea-87b5-be824e6c6f71">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="65"/>
 	<subDataset name="Detalle salida" uuid="29572ae1-8086-40c1-895d-7d39eeac4772">
 		<queryString>
 			<![CDATA[SELECT
@@ -49,14 +49,14 @@ empresas.nombre as empresa,
 empresas.nit,
 empresas.direccion,
 empresas.telefono,ciudades.nombre as ciudad, departamentos.nombre as departamento,
-contarcajas(salidas.idsalida) as totalcajas
+contarcajas(salidas.idsalida) as totalcajas,empleados.nombre as realizado
 FROM empresas,ciudades,departamentos,
 salidas ,
 productosbase ,
 detallesalidas ,
 lotes_almacenados ,
-puntos
-WHERE
+puntos,empleados
+WHERE empleados.id=salidas.realizado and
 ciudades.cod_ciudad = empresas.ciudad and ciudades.dept = departamentos.cod_dept and
 empresas.estado = 1 and
 salidas.idsalida = detallesalidas.salida AND
@@ -97,6 +97,7 @@ order by productosbase.descripcion]]>
 	<field name="ciudad" class="java.lang.String"/>
 	<field name="departamento" class="java.lang.String"/>
 	<field name="totalcajas" class="java.lang.Integer"/>
+	<field name="realizado" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -211,7 +212,7 @@ order by productosbase.descripcion]]>
 					<textFieldExpression><![CDATA[$F{cantidadTotal}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement uuid="3a465334-87c2-4cac-adcb-6e2ca76d5766" x="57" y="14" width="150" height="14"/>
+					<reportElement uuid="3a465334-87c2-4cac-adcb-6e2ca76d5766" x="5" y="14" width="150" height="14"/>
 					<subreportParameter name="codplu">
 						<subreportParameterExpression><![CDATA[$F{plu}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -246,9 +247,14 @@ order by productosbase.descripcion]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="68" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<frame>
-				<reportElement uuid="54d2381d-648f-4a95-8519-3b0ace9f4c0f" x="0" y="0" width="488" height="68"/>
+				<reportElement uuid="54d2381d-648f-4a95-8519-3b0ace9f4c0f" x="0" y="7" width="488" height="13"/>
+				<textField>
+					<reportElement uuid="32696da3-038b-4b68-a446-0c6516cc9409" x="18" y="0" width="211" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["Digitado Por: "+$F{realizado}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</summary>

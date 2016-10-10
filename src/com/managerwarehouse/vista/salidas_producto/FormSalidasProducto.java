@@ -84,7 +84,7 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         JDfechaemision = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        combopuntoentrega = new javax.swing.JComboBox<>();
+        combopuntoentrega = new javax.swing.JComboBox<String>();
         jLabel5 = new javax.swing.JLabel();
         txtpedido = new javax.swing.JTextField();
         jToolBar2 = new javax.swing.JToolBar();
@@ -113,7 +113,7 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         txtnumcaja = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        comboOperador = new javax.swing.JComboBox<>();
+        comboOperador = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         txtstocklote = new javax.swing.JTextField();
@@ -140,7 +140,7 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         jLabel1.setText("SALIDAS DE PRODUCTOS");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALIDAS ABIERTAS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Verdana", 0, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALIDAS ABIERTAS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Verdana", 0, 14))); // NOI18N
 
         TB_salidasAbierta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         TB_salidasAbierta.setModel(new javax.swing.table.DefaultTableModel(
@@ -207,7 +207,7 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         jLabel4.setText("Punto de Entrega");
 
         combopuntoentrega.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        combopuntoentrega.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        combopuntoentrega.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel5.setText("No. de Pedido");
@@ -229,11 +229,16 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         });
         jToolBar2.add(jButton1);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/articulo-icono-9036-32.png"))); // NOI18N
-        jButton2.setText("Modificar");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/docs.png"))); // NOI18N
+        jButton2.setText("Acta de Recepción");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jToolBar2.add(jButton2);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/imprimir-icono-3650-32.png"))); // NOI18N
@@ -465,7 +470,7 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         jLabel13.setText("EMPACADO POR");
 
         comboOperador.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        comboOperador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        comboOperador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
         comboOperador.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 comboOperadorItemStateChanged(evt);
@@ -588,7 +593,8 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -605,11 +611,11 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -739,6 +745,11 @@ public class FormSalidasProducto extends javax.swing.JInternalFrame {
             edicion.limpiar_tablas(TB_salidasAbierta);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+       this.reporte.ACTA_DE_RECEPCION_PUNTO_DE_ENTREGA(txtnumsalida.getText());
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Traslado de Productos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1e6087fe-b670-4aa9-a5b0-8e162a03fce8">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Detalle traslado" uuid="b94e0f2b-43fa-4ca9-b296-52743b006698">
+		<parameter name="num_traslado" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     detalle_traslado_productos.`cantidad` AS detalle_traslado_productos_cantidad,
+     productosbase.`plu` AS productosbase_plu,
+     productosbase.`descripcion` AS productosbase_descripcion
+FROM
+trasladoproductos
+INNER JOIN detalle_traslado_productos ON trasladoproductos.numtraslado = detalle_traslado_productos.traslado
+INNER JOIN productosbase ON detalle_traslado_productos.producto = productosbase.plu
+where trasladoproductos.numtraslado =  $P{num_traslado}
+GROUP BY PRODUCTOSBASE.PLU
+order by productosbase.descripcion
+]]>
+		</queryString>
+		<field name="detalle_traslado_productos_cantidad" class="java.lang.Integer"/>
+		<field name="productosbase_plu" class="java.lang.String"/>
+		<field name="productosbase_descripcion" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="id_traslado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+trasladoproductos.numtraslado,
+trasladoproductos.fechaemision,
+PUNTO_DE_ENTREGA(trasladoproductos.bodegaorigen) AS FARMACIA_ORIGEN,
+punto_de_entrega(trasladoproductos.bodegadestino) AS FARMACIA_DESTINO,
+trasladoproductos.autorizado,
+empleados.nombre AS REALIZADO,
+trasladoproductos.fechahoraingreso
+FROM
+trasladoproductos ,
+empleados
+WHERE
+ trasladoproductos.realizado = empleados.id and trasladoproductos.numtraslado =
+$P{id_traslado}]]>
+	</queryString>
+	<field name="numtraslado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaemision" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FARMACIA_ORIGEN" class="java.lang.String"/>
+	<field name="FARMACIA_DESTINO" class="java.lang.String"/>
+	<field name="autorizado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REALIZADO" class="java.lang.String"/>
+	<field name="fechahoraingreso" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="138" splitType="Stretch">
+			<frame>
+				<reportElement uuid="ec9d97e0-8c1b-438f-a9d1-fbd763486e2e" x="0" y="0" width="572" height="138"/>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement uuid="191224ec-d856-4225-9f6d-cee302d818f9" x="0" y="0" width="160" height="80"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement uuid="ca8509c6-703f-48f8-8639-112a3b0c64cc" x="192" y="21" width="185" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["No. DE TRASLADO: "+$F{numtraslado}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="d6c92575-f363-4b73-a8b5-9fedcd18e0d5" x="184" y="0" width="232" height="29"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TRASLADO DE PRODUCTOS]]></text>
+				</staticText>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement uuid="1678e11d-afbc-4a18-945e-275193a637f1" x="296" y="41" width="185" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{fechaemision}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="ea0d310b-bd6a-4def-83c9-5dfe933f3579" x="192" y="59" width="341" height="35"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["FARMACIA DE ORIGEN: "+$F{FARMACIA_ORIGEN}+"\nFARMACIA DE DESTINO: "+$F{FARMACIA_DESTINO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="46d5d3ac-ce4d-4d5c-8167-82b37ebf1c37" x="191" y="96" width="290" height="30"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["AUTORIZADO: "+$F{autorizado}+"\nREALIZADO: "+$F{REALIZADO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="72823ec7-41a5-42aa-8ca0-6695022cc987" x="191" y="41" width="100" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[FECHA DE EMISION]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="50" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="d2676f35-04a7-4876-99a3-e3b4eff31cde" key="table" style="table" x="36" y="0" width="360" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Detalle traslado" uuid="845ea1ec-df54-44b1-b0a6-6b6fdd8786b1">
+						<datasetParameter name="num_traslado">
+							<datasetParameterExpression><![CDATA[$F{numtraslado}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="41" uuid="39892c97-0a3f-4602-8a81-d1472a70d437">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="17307cf2-9329-4338-bfff-beaff2de9ff3" x="0" y="0" width="41" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[ITEM]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="c7780fb7-cfd2-471e-bd08-0e2c19dcff83" x="0" y="0" width="41" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="61" uuid="c2fd9f30-7b55-42f4-9ec3-b90fccd8d0bf">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="663a803b-d689-43a7-9d60-c9e16fd37dc1" x="0" y="0" width="61" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[PLU]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="2101028b-998d-4237-b8f2-22b2930725cc" x="0" y="0" width="61" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{productosbase_plu}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="309" uuid="cc6c42ee-f773-4174-8045-1bde69ef6061">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="dd7b7bb6-604c-4d76-a26a-c9d3db99c3af" x="0" y="0" width="309" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="cfb061db-0424-4c93-b428-74539fd21276" x="3" y="0" width="306" height="20"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{productosbase_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="78" uuid="8bf9778a-64d1-42dc-bca2-ec13be62e60d">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6ac72344-3cdb-466a-9ee8-2056ac80d69f" x="0" y="0" width="78" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[CANTIDAD TRASLADADA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="178b16ef-faae-4f91-a8fd-635ba8a3beb5" x="0" y="0" width="74" height="20"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{detalle_traslado_productos_cantidad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

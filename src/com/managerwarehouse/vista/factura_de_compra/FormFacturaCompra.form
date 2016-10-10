@@ -47,6 +47,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="JM_nuevo">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+N"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/vista_style_business_and_data_icons_icons_pack_120673/nuevo-archivo-de-documento-escrito-en-papel-pluma-icono-3934-32.png"/>
                 </Property>
@@ -72,6 +75,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JM_consultar">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F3"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/Buscar.png"/>
                 </Property>
@@ -83,10 +89,13 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JM_Imprimir">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+P"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/vista_style_business_and_data_icons_icons_pack_120673/imprimir-icono-3650-32.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Imprimir Soporte"/>
+                <Property name="text" type="java.lang.String" value="Acta de Recepcion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JM_ImprimirActionPerformed"/>
@@ -99,6 +108,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="JM_salir">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="ESCAPE"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/vista_style_business_and_data_icons_icons_pack_120673/salir-de-mi-perfil-icono-3964-48.png"/>
                 </Property>

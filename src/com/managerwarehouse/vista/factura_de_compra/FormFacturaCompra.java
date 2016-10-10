@@ -5,6 +5,8 @@
  */
 package com.managerwarehouse.vista.factura_de_compra;
 
+import com.managerwarehouse.util.reportes.GenerarReporte;
+
 /**
  *
  * @author Servidor-PC
@@ -515,6 +517,7 @@ public class FormFacturaCompra extends javax.swing.JInternalFrame {
 
         jMenu1.setText("Archivo");
 
+        JM_nuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         JM_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/nuevo-archivo-de-documento-escrito-en-papel-pluma-icono-3934-32.png"))); // NOI18N
         JM_nuevo.setText("Nuevo");
         JM_nuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -528,12 +531,14 @@ public class FormFacturaCompra extends javax.swing.JInternalFrame {
         JM_modificar.setText("Modificar");
         jMenu1.add(JM_modificar);
 
+        JM_consultar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         JM_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Buscar.png"))); // NOI18N
         JM_consultar.setText("Consultar");
         jMenu1.add(JM_consultar);
 
+        JM_Imprimir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         JM_Imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/imprimir-icono-3650-32.png"))); // NOI18N
-        JM_Imprimir.setText("Imprimir Soporte");
+        JM_Imprimir.setText("Acta de Recepcion");
         JM_Imprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JM_ImprimirActionPerformed(evt);
@@ -542,6 +547,7 @@ public class FormFacturaCompra extends javax.swing.JInternalFrame {
         jMenu1.add(JM_Imprimir);
         jMenu1.add(jSeparator4);
 
+        JM_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         JM_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/salir-de-mi-perfil-icono-3964-48.png"))); // NOI18N
         JM_salir.setText("Salir");
         JM_salir.addActionListener(new java.awt.event.ActionListener() {
@@ -592,6 +598,8 @@ public class FormFacturaCompra extends javax.swing.JInternalFrame {
 
     private void JM_ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JM_ImprimirActionPerformed
         // TODO add your handling code here:
+        GenerarReporte gr = new GenerarReporte();
+        gr.ACTA_DE_RECEPCION_BODEGA(txtnumfactura.getText());
     }//GEN-LAST:event_JM_ImprimirActionPerformed
 
     private void JM_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JM_salirActionPerformed

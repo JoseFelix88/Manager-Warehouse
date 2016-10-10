@@ -31,7 +31,7 @@
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[SELECT
+			<![CDATA[SELECT productosbase.codigobarras,productosbase.registrosanitario,
 lotes_almacenados.fechavence,
 lotes_almacenados.NUMEROLOTE,
 detallesalidas.cantidad,
@@ -41,6 +41,12 @@ INNER JOIN lotes_almacenados ON detallesalidas.lote = lotes_almacenados.idloteal
 INNER JOIN productosbase ON detallesalidas.producto = productosbase.codigobarras
 INNER JOIN salidas ON detallesalidas.salida = salidas.idsalida WHERE salidas.idsalida = $P{idsalida} and productosbase.plu = $P{codigoplu} group by detallesalidas.iddetallesalida,lotes_almacenados.NUMEROLOTE ORDER BY   detallesalidas.caja]]>
 		</queryString>
+		<field name="codigobarras" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="registrosanitario" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
 		<field name="fechavence" class="java.sql.Date">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
@@ -72,7 +78,7 @@ now()]]>
 	<summary>
 		<band height="21">
 			<componentElement>
-				<reportElement uuid="be762163-5ec6-460c-99aa-c80da14dfe87" key="table" style="table" x="33" y="2" width="323" height="19"/>
+				<reportElement uuid="be762163-5ec6-460c-99aa-c80da14dfe87" key="table" style="table" x="0" y="0" width="323" height="19"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="referencia producto" uuid="1f1a5ee0-3633-4feb-83b1-a5570f9de929">
 						<datasetParameter name="codigoplu">
@@ -83,6 +89,46 @@ now()]]>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
+					<jr:column width="90" uuid="d37037ce-62f7-4451-b29b-718de48056a9">
+						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
+							<staticText>
+								<reportElement uuid="3b7931b2-f56c-44ef-8832-db018a21452f" x="0" y="0" width="90" height="11"/>
+								<textElement textAlignment="Center">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Referencia]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField>
+								<reportElement uuid="15e08a3b-858e-44a0-a6b7-2abfbd3c9b9d" x="0" y="0" width="90" height="14"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{codigobarras}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="118" uuid="94b9765a-e8fe-4bc3-8db2-b5fdd7b160c6">
+						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1604abff-6315-4383-b9ab-17ee8829114b" x="0" y="0" width="118" height="11"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Reg. Sanitario - INVIMA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
+							<textField>
+								<reportElement uuid="71a8df5c-f9fd-4f02-9f03-61f1b14d001a" x="0" y="0" width="118" height="14"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{registrosanitario}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
 					<jr:column width="79" uuid="ef8d852e-2c8f-427c-acc5-75f0226dbc78">
 						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
 							<staticText>
@@ -93,9 +139,9 @@ now()]]>
 								<text><![CDATA[Lote No.]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
 							<textField>
-								<reportElement uuid="9fe34c74-779a-48b8-9b0a-4a99d86e8ec6" x="0" y="0" width="79" height="11"/>
+								<reportElement uuid="9fe34c74-779a-48b8-9b0a-4a99d86e8ec6" x="0" y="0" width="79" height="14"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
@@ -113,9 +159,9 @@ now()]]>
 								<text><![CDATA[F.V]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
 							<textField pattern="MMMMM-yyyy">
-								<reportElement uuid="b9c5fdf2-0473-4de2-9399-19020d70ce8f" x="0" y="0" width="72" height="11"/>
+								<reportElement uuid="b9c5fdf2-0473-4de2-9399-19020d70ce8f" x="0" y="0" width="72" height="14"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
@@ -123,19 +169,19 @@ now()]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="56" uuid="0b28f757-0784-4a5d-9d99-d7056cd4be7d">
+					<jr:column width="39" uuid="0b28f757-0784-4a5d-9d99-d7056cd4be7d">
 						<jr:columnHeader style="table_CH" height="11" rowSpan="1">
 							<staticText>
-								<reportElement uuid="086d910e-2afb-438f-88de-3b0cb70dcfdb" x="0" y="0" width="53" height="11"/>
+								<reportElement uuid="086d910e-2afb-438f-88de-3b0cb70dcfdb" x="0" y="0" width="39" height="11"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
 								<text><![CDATA[Cantidad]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
 							<textField pattern="#,##0">
-								<reportElement uuid="57ec01dd-42b3-49a6-8206-6ea51d1a920d" x="0" y="0" width="53" height="11"/>
+								<reportElement uuid="57ec01dd-42b3-49a6-8206-6ea51d1a920d" x="0" y="0" width="39" height="14"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
@@ -153,9 +199,9 @@ now()]]>
 								<text><![CDATA[Caja ]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table_TD" height="11" rowSpan="1">
+						<jr:detailCell style="table_TD" height="17" rowSpan="1">
 							<textField>
-								<reportElement uuid="33515ac4-8db0-499a-b6ef-d8fde8ed7c8f" x="0" y="0" width="38" height="11"/>
+								<reportElement uuid="33515ac4-8db0-499a-b6ef-d8fde8ed7c8f" x="0" y="0" width="38" height="14"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>

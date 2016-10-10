@@ -220,7 +220,7 @@ public class GenerarReporte extends database {
         }
 
     }
-    
+
     public void ORDEN_DE_PEDIDO_PROVEEDOR_CON_PRECIO(Object key) {
         String reporte = "Orden de Pedido Proveedor.jasper";
         try {
@@ -228,6 +228,32 @@ public class GenerarReporte extends database {
             masterReport = (JasperReport) JRLoader.loadObject(Ubicacion.concat(reporte));
             PARAMETROS.put("proveedor", key);
             PARAMETROS.put("userlogin", Variables_Gloabales.EMPLEADO.getNombreCompleto());
+            edicion.Lanzador(masterReport, PARAMETROS);
+        } catch (Exception e) {
+            edicion.mensajes(3, "error no se pudo lanzar el informe " + reporte + ".\n" + e);
+        }
+
+    }
+
+    public void ACTA_DE_RECEPCION_BODEGA(Object key) {
+        String reporte = "Acta de Recepcion bodega.jasper";
+        try {
+            String Ubicacion = RUTA_REPORTE + "/compras/";
+            masterReport = (JasperReport) JRLoader.loadObject(Ubicacion.concat(reporte));
+            PARAMETROS.put("NUMFACTURA", key.toString());
+            edicion.Lanzador(masterReport, PARAMETROS);
+        } catch (Exception e) {
+            edicion.mensajes(3, "error no se pudo lanzar el informe " + reporte + ".\n" + e);
+        }
+
+    }
+
+    public void ACTA_DE_RECEPCION_PUNTO_DE_ENTREGA(Object key) {
+        String reporte = "Acta de Recepcion punto de entrega.jasper";
+        try {
+            String Ubicacion = RUTA_REPORTE + "/";
+            masterReport = (JasperReport) JRLoader.loadObject(Ubicacion.concat(reporte));
+            PARAMETROS.put("NUMFACTURA", key.toString());
             edicion.Lanzador(masterReport, PARAMETROS);
         } catch (Exception e) {
             edicion.mensajes(3, "error no se pudo lanzar el informe " + reporte + ".\n" + e);

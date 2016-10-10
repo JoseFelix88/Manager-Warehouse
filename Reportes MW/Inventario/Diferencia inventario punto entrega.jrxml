@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Diferencia inventario punto entrega" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b1c8eda2-05f7-432b-8404-aec97fc8a989">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="522"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="detalle de diferencia" uuid="fabab10c-189f-4061-a7a2-a18d330dcd6d">
+		<parameter name="PUNTO" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="fecha1" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="fecha2" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     productosbase.`plu` AS productosbase_plu,
+     productosbase.`descripcion` AS productosbase_descripcion,
+     detalle_inventario_puntos.`Sobrante` AS detalle_inventario_puntos_Sobrante,
+     detalle_inventario_puntos.`Faltante` AS detalle_inventario_puntos_Faltante
+FROM
+puntos
+INNER JOIN inventariospuntoentrega ON puntos.COD_PUNTO = inventariospuntoentrega.puntoentrega
+INNER JOIN detalle_inventario_puntos ON detalle_inventario_puntos.inventario = inventariospuntoentrega.idinventariopunto
+INNER JOIN productosbase ON detalle_inventario_puntos.Plu = productosbase.plu
+WHERE
+     inventariospuntoentrega.`fechainicio` BETWEEN $P{fecha1} and $P{fecha2}
+ AND puntos.NOMBRE = $P{PUNTO}  AND (detalle_inventario_puntos.`Sobrante` > 0 OR
+detalle_inventario_puntos.`Faltante` > 0 ) GROUP BY productosbase.`plu` ORDER BY  productosbase.`descripcion`]]>
+		</queryString>
+		<field name="productosbase_plu" class="java.lang.String"/>
+		<field name="productosbase_descripcion" class="java.lang.String"/>
+		<field name="detalle_inventario_puntos_Sobrante" class="java.lang.Integer"/>
+		<field name="detalle_inventario_puntos_Faltante" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="puntoentrega" class="java.lang.String"/>
+	<parameter name="f1" class="java.util.Date"/>
+	<parameter name="f2" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     now()]]>
+	</queryString>
+	<field name="now()" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<frame>
+				<reportElement uuid="c32be3bc-5e09-4917-99f2-f04427c0c6e8" x="0" y="0" width="572" height="58"/>
+				<textField>
+					<reportElement uuid="4541b536-932a-4b75-a5f9-6a40bd98db11" x="179" y="0" width="288" height="37"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["DIFERENCIAS DE INVENTARIO PUNTO DE ENTREGA\n"+$P{puntoentrega}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="c106d2d1-e998-40ce-abf2-f0c367fad714" x="183" y="41" width="95" height="14"/>
+					<textElement verticalAlignment="Middle">
+						<font size="7"/>
+					</textElement>
+					<text><![CDATA[PERIODO DE INVENTARIO:]]></text>
+				</staticText>
+				<textField pattern="dd MMMMM yyyy">
+					<reportElement uuid="24a6e52d-115b-46b2-9718-dfe330d00b79" x="278" y="41" width="49" height="14"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{f1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd MMMMM yyyy">
+					<reportElement uuid="e447568a-904a-4561-b67c-c12c36b65a55" x="331" y="41" width="65" height="14"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{f2}]]></textFieldExpression>
+				</textField>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement uuid="2daa4379-f9fd-4e62-8dbd-bcac5f68b6d9" x="43" y="0" width="131" height="55"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="50" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="396b0c5d-74e4-47bd-a588-1244182ea223" key="table" style="table" x="43" y="0" width="360" height="50"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="detalle de diferencia" uuid="54f37180-5515-4f31-8e32-98892c5b8cd5">
+						<datasetParameter name="PUNTO">
+							<datasetParameterExpression><![CDATA[$P{puntoentrega}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fecha1">
+							<datasetParameterExpression><![CDATA[$P{f1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fecha2">
+							<datasetParameterExpression><![CDATA[$P{f2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="47" uuid="7c50c757-65dc-4b5b-97dc-e5ba1222a326">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5481f9e6-8028-4504-a182-a1f99ea5dc76" x="0" y="0" width="47" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[PLU]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="df06d5b6-82a9-4eea-9230-f98969c1948b" x="0" y="0" width="47" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{productosbase_plu}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="316" uuid="3d714c02-c110-4bca-86e7-1296f839e5f9">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="c01a3110-7f57-4c63-9fe1-61e3156d4f8e" x="0" y="0" width="316" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[DESCRIPCIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="382fe2d6-73d0-4ebf-8b80-eb5e3beadca9" x="0" y="0" width="316" height="20"/>
+								<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{productosbase_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="69" uuid="d99e7dd1-3f0e-4ff7-afbc-8f23a52f8a09">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="60fd6eda-6bb2-4091-bb92-d2d75c06d605" x="0" y="0" width="69" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[SOBRANTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="fa336d65-b929-4750-9f4d-bd89566fdfe9" x="0" y="0" width="65" height="20"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{detalle_inventario_puntos_Sobrante}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="ded9fbcb-8ac6-460f-b357-b62eb496ced2">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8361ca7a-0618-4042-aa43-6d44bbaea1dd" x="0" y="0" width="66" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[FALTANTE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="#,##0">
+								<reportElement uuid="b1f14868-3da2-424e-b6bf-c2845389eeae" x="0" y="0" width="62" height="20"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{detalle_inventario_puntos_Faltante}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

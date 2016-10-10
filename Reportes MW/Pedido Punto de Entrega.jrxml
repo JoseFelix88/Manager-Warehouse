@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pedido Punto de Entrega" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0508a325-9560-4447-800e-e6740f9bce61">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="detalle pedido" uuid="3d222219-d0ba-442d-a320-d2f6c41093a5">
+		<parameter name="numpedido" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+productosbase.plu,
+productosbase.descripcion,
+detalle_pedidos_puntos.cantdespachada
+FROM
+detalle_pedidos_puntos ,
+productosbase ,
+pedidos_puntos
+WHERE
+detalle_pedidos_puntos.pedido = pedidos_puntos.numpedido AND
+detalle_pedidos_puntos.producto = productosbase.plu and pedidos_puntos.`numpedido` = $P{numpedido}
+GROUP BY
+productosbase.plu
+ORDER BY
+productosbase.descripcion ASC]]>
+		</queryString>
+		<field name="plu" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="descripcion" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="cantdespachada" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="pedido" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     pedidos_puntos.`numpedido` AS pedidos_puntos_numpedido,
+     pedidos_puntos.`fechaemision` AS pedidos_puntos_fechaemision,
+     puntos.`NOMBRE` AS puntos_NOMBRE
+FROM
+     `puntos` puntos INNER JOIN `pedidos_puntos` pedidos_puntos ON puntos.`COD_PUNTO` = pedidos_puntos.`puntoentrega` WHERE pedidos_puntos.`numpedido` = $P{pedido}]]>
+	</queryString>
+	<field name="pedidos_puntos_numpedido" class="java.lang.Integer"/>
+	<field name="pedidos_puntos_fechaemision" class="java.sql.Timestamp"/>
+	<field name="puntos_NOMBRE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="62" splitType="Stretch">
+			<frame>
+				<reportElement uuid="e58d0e54-0d66-43a8-b347-f45bf356e50f" x="0" y="0" width="572" height="62"/>
+				<image>
+					<reportElement uuid="17da1046-88d2-4640-bea1-7d9b9a56df2f" x="0" y="0" width="225" height="62"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="13f95d36-1689-4a2f-9fd8-febacdda5a15" x="240" y="0" width="167" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{pedidos_puntos_fechaemision}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="ee2528ac-3923-47bc-8549-227a197cab19" x="240" y="20" width="332" height="42"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Punto de Entrega: "+$F{puntos_NOMBRE}+"\nPedido No. "+$F{pedidos_puntos_numpedido}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="55" splitType="Stretch">
+			<frame>
+				<reportElement uuid="c79912c4-9c4c-49c7-be62-16c9fb8b5efb" x="0" y="0" width="572" height="55"/>
+				<componentElement>
+					<reportElement uuid="4659dbf5-c826-48cd-aa51-22701184e714" key="table" style="table" x="0" y="0" width="360" height="55"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="detalle pedido" uuid="56c497e2-b3ed-4e66-ab5e-a26c74c0d5ab">
+							<datasetParameter name="numpedido">
+								<datasetParameterExpression><![CDATA[$P{pedido}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="60" uuid="17ccf995-1778-40f8-bfe6-ee7fccef0eaf">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="9778d65e-5e91-42af-9760-734c5d3a90ba" x="0" y="0" width="60" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[PLU]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="2d265086-b553-481b-9db6-4a26fd93b174" x="0" y="0" width="60" height="20"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{plu}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="342" uuid="7aec5322-c121-4715-8e6c-12cc76ee656e">
+							<jr:tableFooter height="30" rowSpan="1"/>
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="b13de73b-1d73-4d9f-ad4a-ff9c86284638" x="0" y="0" width="342" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[DESCRIPCIÓN]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="15" rowSpan="1">
+								<textField>
+									<reportElement uuid="12c09b17-c96f-4375-a103-5ca8b691ccbd" x="118" y="0" width="62" height="15"/>
+									<textElement textAlignment="Right"/>
+									<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+								</textField>
+								<textField evaluationTime="Report">
+									<reportElement uuid="a32ca5fc-f052-481b-881d-94841bf863ae" x="180" y="0" width="44" height="15"/>
+									<textElement/>
+									<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+								</textField>
+							</jr:columnFooter>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="da541ff5-ed08-4d18-81d0-116f58fcbd83" x="2" y="0" width="340" height="20"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="9e50160e-0fad-4993-9e19-baca2a50d764">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="77e5ea70-483c-4ea0-8aa4-3fc66905a19a" x="0" y="0" width="90" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[CANTIDAD DESPACHADA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField pattern="#,##0">
+									<reportElement uuid="4a8bb258-1775-4816-af97-efa0fee483bc" x="0" y="0" width="88" height="20"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{cantdespachada}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="098e2802-7a4d-489e-9606-8838d35579b1">
+							<jr:tableFooter height="30" rowSpan="1"/>
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="758da4b9-759f-4177-a5b4-0001281fa731" x="0" y="0" width="70" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[CANTIDAD EMPACADA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="15" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1"/>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

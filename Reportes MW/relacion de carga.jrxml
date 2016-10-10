@@ -24,10 +24,10 @@
 		</box>
 	</style>
 	<subDataset name="relacion puntos" uuid="5da1de2c-1895-4ebb-83c9-71fb4a4a1e0e">
-		<queryString language="SQL">
+		<queryString>
 			<![CDATA[SELECT
 puntos.NOMBRE,
-Count(DISTINCT detallesalidas.caja)
+Count(DISTINCT detallesalidas.caja),asignar_cadena_de_frio(puntos.NOMBRE) AS CADENA_FRIO
 FROM
 salidas ,
 detallesalidas ,
@@ -38,12 +38,13 @@ salidas.puntoentrega = puntos.COD_PUNTO
 GROUP BY
 puntos.NOMBRE
 ORDER BY
-puntos.NOMBRE ASC]]>
+puntos.RUTA ASC]]>
 		</queryString>
 		<field name="NOMBRE" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="Count(DISTINCT detallesalidas.caja)" class="java.lang.Long"/>
+		<field name="CADENA_FRIO" class="java.lang.String"/>
 		<variable name="totalcantcajas" class="java.lang.Long" calculation="Sum">
 			<variableExpression><![CDATA[$F{Count(DISTINCT detallesalidas.caja)}]]></variableExpression>
 		</variable>
@@ -57,28 +58,34 @@ NOW()]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="192" splitType="Stretch">
+		<band height="113" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="a7b9b89b-e173-401a-b919-caf10271961b" x="26" y="100" width="50" height="20"/>
+				<reportElement uuid="a7b9b89b-e173-401a-b919-caf10271961b" x="26" y="67" width="50" height="20"/>
 				<textElement/>
 				<text><![CDATA[Sincelejo]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="8f33c239-b1de-4109-9e09-de38f3696051" x="76" y="100" width="100" height="20"/>
+				<reportElement uuid="8f33c239-b1de-4109-9e09-de38f3696051" x="76" y="67" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3971841f-2abd-4e72-b1bd-d207ec5eda51" x="25" y="136" width="519" height="56"/>
-				<textElement/>
+				<reportElement uuid="3971841f-2abd-4e72-b1bd-d207ec5eda51" x="25" y="82" width="519" height="31"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Señor: Orlando Alviz\nSUMISALUD DE LA COSTA S.A.S HACE ENTREGA DE LA SIGUIENTE RELACION DE CARGA, QUE VA DIRIGIDA A NUESTROSPUNTOS DE ENTREGA."]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement uuid="913c2bbc-cc00-43eb-9bd1-77340296ca11" x="0" y="0" width="336" height="65"/>
+				<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<summary>
 		<band height="53" splitType="Stretch">
 			<componentElement>
-				<reportElement uuid="8bffc3ab-5d0f-490d-8433-9e7211796461" key="table" style="table" x="48" y="3" width="360" height="50"/>
+				<reportElement uuid="8bffc3ab-5d0f-490d-8433-9e7211796461" key="table" style="table" x="0" y="3" width="360" height="50"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="relacion puntos" uuid="06a61df1-d1c1-4006-92ed-f343ab3e805c">
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
@@ -99,7 +106,7 @@ NOW()]]>
 								<reportElement uuid="58ee0e8b-e184-4809-8f3b-eaf448296c2e" x="0" y="30" width="171" height="1"/>
 							</line>
 						</jr:tableFooter>
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
 							<staticText>
 								<reportElement uuid="6714bfa1-8033-4378-a261-a3140bcb6f06" x="0" y="0" width="171" height="30"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -113,36 +120,72 @@ NOW()]]>
 								<text><![CDATA[Total Cantidad de Cajas]]></text>
 							</staticText>
 						</jr:columnFooter>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
 							<textField>
-								<reportElement uuid="297a4450-d6da-4469-8ad8-320aee1e9939" x="2" y="0" width="169" height="20"/>
+								<reportElement uuid="297a4450-d6da-4469-8ad8-320aee1e9939" x="2" y="0" width="169" height="30"/>
 								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="71" uuid="7c668e01-74f0-4273-afc9-f1be55409277">
-						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+					<jr:column width="51" uuid="7c668e01-74f0-4273-afc9-f1be55409277">
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
 							<staticText>
-								<reportElement uuid="06ce9625-e687-4eb1-8327-72d1127cae06" x="0" y="0" width="71" height="30"/>
+								<reportElement uuid="06ce9625-e687-4eb1-8327-72d1127cae06" x="0" y="0" width="51" height="30"/>
 								<textElement textAlignment="Center"/>
 								<text><![CDATA[Cantidad de Cajas]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter height="34" rowSpan="1">
 							<textField>
-								<reportElement uuid="8f49f50f-084e-470e-8333-cccd9928b71c" x="0" y="0" width="71" height="34"/>
+								<reportElement uuid="8f49f50f-084e-470e-8333-cccd9928b71c" x="0" y="0" width="51" height="34"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$V{totalcantcajas}]]></textFieldExpression>
 							</textField>
 						</jr:columnFooter>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
 							<textField>
-								<reportElement uuid="c668ec26-6892-4d67-915f-ab324478a10a" x="0" y="0" width="71" height="20"/>
+								<reportElement uuid="c668ec26-6892-4d67-915f-ab324478a10a" x="0" y="0" width="51" height="30"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{Count(DISTINCT detallesalidas.caja)}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
+					</jr:column>
+					<jr:column width="192" uuid="6bbe9785-6fb3-43d8-95c2-a6fa64fda4ef">
+						<jr:tableFooter height="61" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1f310284-4544-4c81-93ec-d064c07b0194" x="0" y="0" width="192" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[CADENA DE FRIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="34" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="96ce7eb1-ce4e-4e7b-abe5-2c3e36f26f98" x="0" y="0" width="192" height="30"/>
+								<textElement verticalAlignment="Top">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CADENA_FRIO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="148" uuid="27f98b73-d6c3-40e7-a8c7-f40cf4adab45">
+						<jr:tableFooter height="61" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1ed4761b-3d87-4eb8-87d1-aca17dcd115f" x="0" y="0" width="148" height="35"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true" isUnderline="true"/>
+								</textElement>
+								<text><![CDATA[RECIBI CANTIDAD DE CAJAS COMPLETAS SIN VERIFICAR CONTENIDO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="34" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1"/>
 					</jr:column>
 				</jr:table>
 			</componentElement>

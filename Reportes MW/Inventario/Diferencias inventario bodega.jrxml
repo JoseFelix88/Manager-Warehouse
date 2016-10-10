@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Diferencias inventario bodega" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2b1d2f52-7228-4e25-bff8-7004b4f51031">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Diferencias" uuid="4cb00976-12c3-4475-8775-26ff696930ff">
+		<parameter name="f1" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="f2" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT productosbase.plu,productosbase.descripcion,
+if(diferencia_saldo_bodega(saldofinal(productosbase.plu,$P{f1},$P{f2}),saldofisicobodega(productosbase.plu,$P{f1},$P{f2})) > 0,diferencia_saldo_bodega(saldofinal(productosbase.plu,$P{f1},$P{f2}),saldofisicobodega(productosbase.plu,$P{f1},$P{f2})),0 ) as Sobrante,
+IF(diferencia_saldo_bodega(saldofinal(productosbase.plu,$P{f1},$P{f2}),saldofisicobodega(productosbase.plu,$P{f1},$P{f2})) < 0,diferencia_saldo_bodega(saldofinal(productosbase.plu,$P{f1},$P{f2}),saldofisicobodega(productosbase.plu,$P{f1},$P{f2}))*(-1),0) as Faltante
+FROM productosbase
+WHERE diferencia_saldo_bodega(saldofinal(productosbase.plu,$P{f1},$P{f2}),saldofisicobodega(productosbase.plu,$P{f1},$P{f2})) > 0 OR
+diferencia_saldo_bodega(saldofinal(productosbase.plu,$P{f1},$P{f2}),saldofisicobodega(productosbase.plu,$P{f1},$P{f2})) < 0
+GROUP BY productosbase.plu ORDER BY productosbase.descripcion]]>
+		</queryString>
+		<field name="plu" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="descripcion" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Sobrante" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Faltante" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="F1" class="java.util.Date"/>
+	<parameter name="F2" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[select now()]]>
+	</queryString>
+	<field name="now()" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<frame>
+				<reportElement uuid="53318f5d-6528-4c38-8404-07746117cd66" x="0" y="0" width="572" height="69"/>
+				<staticText>
+					<reportElement uuid="22617122-b453-49b4-a069-db4aa43fd5ea" x="196" y="0" width="247" height="50"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DIFERENCIAS DE  INVENTARIO BODEGA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="31157bf7-7452-4cb5-a9fa-05a0b8142c76" x="156" y="50" width="102" height="19"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[PERIODO DE INVENTARIO]]></text>
+				</staticText>
+				<textField pattern="EEE dd MMM yyyy">
+					<reportElement uuid="e98c7467-e577-482c-aa58-5c9410bde335" x="262" y="48" width="108" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{F1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEE dd MMM yyyy">
+					<reportElement uuid="63fe284f-6217-4e75-8165-00d5d0870c82" x="370" y="48" width="127" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{F2}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement uuid="bacdebb3-ae41-468b-a860-43b33acb49e4" x="0" y="0" width="196" height="50"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="51" splitType="Stretch">
+			<frame>
+				<reportElement uuid="151629a0-d6e4-4059-b90f-11ada5529db2" x="0" y="0" width="572" height="51"/>
+				<componentElement>
+					<reportElement uuid="b67d7293-7179-4829-ba78-e45276018806" key="table" style="table" x="52" y="1" width="360" height="50"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="Diferencias" uuid="4b100bd3-f342-4df9-b074-9fd2201e9c4d">
+							<datasetParameter name="f1">
+								<datasetParameterExpression><![CDATA[$P{F1}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="f2">
+								<datasetParameterExpression><![CDATA[$P{F2}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="51" uuid="0e349a06-0ea6-4ee2-ad10-3518e7ef3012">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="8471358c-a866-48bb-80e8-f4eac7c26170" x="0" y="0" width="32" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Plu]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="70961d47-4866-4c0b-a279-1ba178670a1d" x="0" y="0" width="51" height="20"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{plu}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="288" uuid="71c6994b-8cc0-4772-aaf7-85d75fc849ec">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="b9ff9612-c643-4d0f-b540-5f0167965474" x="0" y="0" width="288" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Descripcion]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="ced392c8-83b6-4206-8436-d07c884c3e40" x="0" y="0" width="288" height="20"/>
+									<textElement verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="59" uuid="539d7b1b-ea00-4409-ab14-711ffbbf5ce7">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="d18af129-476c-473c-b6bd-8961285b90eb" x="0" y="0" width="59" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Sobrante]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField pattern="#,##0">
+									<reportElement uuid="fe215d32-877e-4dfe-9c13-d6cfd8638f15" x="0" y="0" width="59" height="20"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Sobrante}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="67" uuid="1ec3f296-46d8-40ca-93a6-d6c1c993d851">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement uuid="360916ba-ab60-460f-b515-b65fea270481" x="0" y="0" width="67" height="30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Faltante]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField pattern="#,##0">
+									<reportElement uuid="bc8c4e79-db86-4487-aabc-3a6f1bfd71e2" x="0" y="0" width="60" height="20"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{Faltante}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

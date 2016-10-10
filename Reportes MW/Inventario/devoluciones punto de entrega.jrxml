@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="devoluciones punto de entrega" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8e7412ef-b6e9-402b-b950-d6d6c1bd4aa6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Detalle Devolucion" uuid="b972952c-0f1a-48a9-9f3d-8a6faadfb9f5">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+productosbase.plu,
+productosbase.codigobarras,
+productosbase.descripcion,
+detalledevolucionpuntos.lote,
+detalledevolucionpuntos.fechavence,
+detalledevolucionpuntos.cantidad
+FROM
+devolucionespunto
+INNER JOIN detalledevolucionpuntos ON devolucionespunto.iddevolucionpunto = detalledevolucionpuntos.devolucion
+INNER JOIN productosbase ON detalledevolucionpuntos.producto = productosbase.plu
+WHERE
+devolucionespunto.iddevolucionpunto = 55
+]]>
+		</queryString>
+		<field name="plu" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="codigobarras" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="descripcion" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="lote" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="fechavence" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="cantidad" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="ID_devolucion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+devolucionespunto.iddevolucionpunto,
+devolucionespunto.fechaemision,
+puntos.NOMBRE AS PUNTO_ENTREGA,
+devolucionespunto.concepto,
+empleados.nombre as realizado,
+devolucionespunto.fechahoraingreso
+FROM empleados,
+devolucionespunto
+INNER JOIN puntos ON devolucionespunto.puntoentrega = puntos.COD_PUNTO
+WHERE devolucionespunto.iddevolucionpunto = $P{ID_devolucion} and empleados.id = devolucionespunto.realizado]]>
+	</queryString>
+	<field name="iddevolucionpunto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaemision" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PUNTO_ENTREGA" class="java.lang.String"/>
+	<field name="concepto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="realizado" class="java.lang.String"/>
+	<field name="fechahoraingreso" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="145" splitType="Stretch">
+			<frame>
+				<reportElement uuid="6d788556-c745-4481-bb5c-3fe4df8a575c" x="0" y="0" width="572" height="145"/>
+				<image vAlign="Middle">
+					<reportElement uuid="2e4c5750-1e26-4572-8efa-7d6baf90b2ee" x="0" y="0" width="191" height="70"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement uuid="8f21f5aa-044f-4560-9fd7-5e30150ab220" x="203" y="0" width="182" height="27"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DEVOLUCIONES DE PRODUCTOS - PUNTO DE ENTREGA]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="90c64757-f35a-4c19-aa01-89270806c872" x="206" y="33" width="194" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["No. DE DEVOLUCION: "+$F{iddevolucionpunto}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement uuid="4828b189-b0bc-4069-8fba-cbb7d9fe43d2" x="296" y="47" width="138" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{fechaemision}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="01ce5be7-2c1b-49bf-954b-1a7aa1dac09f" x="207" y="49" width="88" height="16"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Fecha de Emision]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="a81fb8ad-c9c0-49a9-9bbf-a5e64a44d187" x="207" y="67" width="283" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["Punto de Entrega: "+$F{PUNTO_ENTREGA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="0fd9d2a3-5b4c-438c-9236-8aa13f7a5a79" x="3" y="85" width="204" height="60"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Concepto: "+$F{concepto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="9a6553e4-89ec-446c-b7ed-516485866cfa" x="207" y="85" width="169" height="13"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Realizado por: "+$F{realizado}]]></textFieldExpression>
+				</textField>
+				<textField pattern="yyyy.MMMMM.dd  hh:mm aaa">
+					<reportElement uuid="c0953d64-45f7-4783-a2c9-4559bdfb2cf6" x="207" y="99" width="251" height="13"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fechahoraingreso}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="104" splitType="Stretch"/>
+	</summary>
+</jasperReport>
