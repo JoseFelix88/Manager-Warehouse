@@ -19,6 +19,7 @@ import com.managerwarehouse.vista.inventario.puntoentrega.FormTrasladoMercancias
 import com.managerwarehouse.vista.producto.FormAsignarCUM;
 import com.managerwarehouse.vista.producto.FormListarPlu;
 import com.managerwarehouse.vista.producto.FormProducto;
+import com.managerwarehouse.vista.producto.FormTemperaturaHumedad;
 import com.managerwarehouse.vista.producto.Formlotealmacenado;
 import com.managerwarehouse.vista.producto.devoluciones.FormDevolucionPunto;
 import com.managerwarehouse.vista.producto.devoluciones.proveedor.FormDevolucionProveedor;
@@ -58,6 +59,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
     FormTrasladoMercancias formTrasladoMercancias;
     FormDevolucionProveedor formDevolucionProveedor;
     FormPedidoSugerido formPedidoSugerido;
+    FormTemperaturaHumedad formTemperaturaHumedad;
 
     private static JDesktopPane jDesktopPane1;
 
@@ -93,6 +95,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
             Obtener_Eventos_De_SubMenu(contenedor.JM_trasladoproducto);
             Obtener_Eventos_De_SubMenu(contenedor.JM_DevolucionProveedor);
             Obtener_Eventos_De_SubMenu(contenedor.JM_pedidosugerido);
+            Obtener_Eventos_De_SubMenu(contenedor.JM_temperaturahumedad);
             contenedor.JM_Profile.setText(Variables_Gloabales.EMPLEADO.getNombreCompleto());
         } else {
             contenedor.setVisible(true);
@@ -356,6 +359,21 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
                             (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
                 } else {
                     formPedidoSugerido.setIcon(false);
+                }
+
+                break;
+                
+            case "ctrltemphum":
+                 if (Obtener_Estado_Formulario(this.formTemperaturaHumedad, Contenedor.Panel_Contenedor)) {
+                    formTemperaturaHumedad = new FormTemperaturaHumedad();
+                    formTemperaturaHumedad.show();
+                    Contenedor.Panel_Contenedor.add(formTemperaturaHumedad);
+                    java.awt.Dimension Tamaño_Panel = Contenedor.Panel_Contenedor.getSize();
+                    java.awt.Dimension Tamaño_InternalFrame = formTemperaturaHumedad.getSize();
+                    formTemperaturaHumedad.setLocation((Tamaño_Panel.width - Tamaño_InternalFrame.width) / 2,
+                            (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
+                } else {
+                    formTemperaturaHumedad.setIcon(false);
                 }
 
                 break;

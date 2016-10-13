@@ -30,6 +30,62 @@ public class database {
      * OUTPUT: un object[][] con los datos resultantes, sino retorna NULL
      */
 
+    public Object[][] SELECT_SP(String S_P, Object parametros) {
+        int registros = 0, columnas = 0;
+        String q = null;
+        if (parametros != null) {
+            q = "CALL " + S_P + "(" + parametros + ")";
+        }
+
+        System.out.println(q);
+        //obtenemos la cantidad de registros existentes en la tabla
+        try {
+
+            PreparedStatement pstm = conn.prepareStatement(q);
+            try (ResultSet res = pstm.executeQuery()) {
+                while (res.next()) {
+                    columnas = res.getMetaData().getColumnCount();
+                    registros = registros + 1;
+                }
+
+//res.next();
+                //          registros = res.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        //se crea una matriz con tantas filas y columnas que necesite
+        Object[][] data = new Object[registros][columnas];
+
+        //realizamos la consulta sql y llenamos los datos en la matriz "Object"
+        try {
+//            System.out.println(1);
+            PreparedStatement pstm = conn.prepareStatement(q);
+            try (ResultSet res = pstm.executeQuery()) {
+                int i = 0;
+                while (res.next()) {
+
+                    for (int j = 0; j <= columnas - 1; j++) {
+
+//                        System.out.println("columnas "+colname[j]+" = "+res.getObject(j+1));
+                        data[i][j] = res.getObject(j + 1);
+
+                        if (data[i][j] == null) {
+
+                            data[i][j] = "";
+                        }
+                    }
+
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en Select SQL: "+q+" " + e);
+        }
+        return data;
+    }
+    
     public Object[][] select(String table, String fields, String where) {
 
         int registros = 0, columnas = 0;
@@ -154,6 +210,35 @@ public class database {
         } catch (SQLException e) {
             System.out.println("Error al ACTUAZALIAR en la tabla: " + table + "\n" + e);
         }
+        return res;
+    }
+
+    public boolean EJECUTAR_SP(String sp, Object[] values) {
+
+        boolean res = false;
+
+        //SE RECORRE EL ARRAY DE VALORES
+        String valores = "";
+        for (Object value : values) {
+            valores = valores + value + ",";
+        }
+
+        String datavalores = valores.substring(0, valores.length() - 1);
+
+        //Se arma la consulta
+        String q = " CALL  " + sp + " ( " + datavalores + " ) ";
+        System.out.println(q);
+        //se ejecuta la consulta
+//        System.out.println(q);
+        try {
+            try (CallableStatement pstm = conn.prepareCall(q)) {
+                pstm.execute();
+            }
+            res = true;
+        } catch (Exception e) {
+            System.out.println("Error la momento de ejecuetar SP " + sp + ": " + e);
+        }
+
         return res;
     }
 

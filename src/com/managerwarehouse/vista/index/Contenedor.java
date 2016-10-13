@@ -159,6 +159,7 @@ public class Contenedor extends javax.swing.JFrame {
         JM_pedidoPunto = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         JM_trasladoproducto = new javax.swing.JMenuItem();
+        JM_temperaturahumedad = new javax.swing.JMenuItem();
         JM_Profile = new javax.swing.JMenu();
         R_Salir = new javax.swing.JMenuItem();
 
@@ -478,6 +479,15 @@ public class Contenedor extends javax.swing.JFrame {
         JM_trasladoproducto.setOpaque(true);
         jMenu3.add(JM_trasladoproducto);
 
+        JM_temperaturahumedad.setBackground(new java.awt.Color(51, 51, 51));
+        JM_temperaturahumedad.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        JM_temperaturahumedad.setForeground(new java.awt.Color(255, 204, 0));
+        JM_temperaturahumedad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/thermometer.png"))); // NOI18N
+        JM_temperaturahumedad.setText("Control Temperatura & Humedad");
+        JM_temperaturahumedad.setActionCommand("ctrltemphum");
+        JM_temperaturahumedad.setOpaque(true);
+        jMenu3.add(JM_temperaturahumedad);
+
         Contenedor_Menu_General.add(jMenu3);
 
         JM_Profile.setBackground(new java.awt.Color(255, 255, 255));
@@ -654,6 +664,7 @@ public class Contenedor extends javax.swing.JFrame {
     public javax.swing.JMenuItem JM_inventariopunto;
     public javax.swing.JMenuItem JM_pedidoPunto;
     public javax.swing.JMenuItem JM_pedidosugerido;
+    public javax.swing.JMenuItem JM_temperaturahumedad;
     public javax.swing.JMenuItem JM_trasladoproducto;
     private javax.swing.JMenu Menu_Empleado;
     public static javax.swing.JDesktopPane Panel_Contenedor;

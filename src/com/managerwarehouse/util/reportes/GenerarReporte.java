@@ -6,6 +6,7 @@ import com.managerwarehouse.util.database;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -254,6 +255,22 @@ public class GenerarReporte extends database {
             String Ubicacion = RUTA_REPORTE + "/";
             masterReport = (JasperReport) JRLoader.loadObject(Ubicacion.concat(reporte));
             PARAMETROS.put("NUMFACTURA", key.toString());
+            edicion.Lanzador(masterReport, PARAMETROS);
+        } catch (Exception e) {
+            edicion.mensajes(3, "error no se pudo lanzar el informe " + reporte + ".\n" + e);
+        }
+
+    }
+
+    public void GRAFRICO_TEMPERATURA_HUMEDAD(Object f1, Object f2, String key) {
+        String reporte = "Grafico Temperatura y Humedad.jasper";
+        try {
+            String Ubicacion = RUTA_REPORTE + "/utilidades/";
+            masterReport = (JasperReport) JRLoader.loadObject(Ubicacion.concat(reporte));
+            PARAMETROS.put("fec1", f1);
+            PARAMETROS.put("fec2", f2);
+            PARAMETROS.put("IDCONCEPTO", key);
+            System.out.println(PARAMETROS);
             edicion.Lanzador(masterReport, PARAMETROS);
         } catch (Exception e) {
             edicion.mensajes(3, "error no se pudo lanzar el informe " + reporte + ".\n" + e);

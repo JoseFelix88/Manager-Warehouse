@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Grafico Temperatura y Humedad" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2245788b-b8df-4506-a3f9-22d3d0ce4407">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="33"/>
+	<parameter name="IDCONCEPTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fec1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fec2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+control_temperaturas.fecharegistro,
+DAY(control_temperaturas.fecharegistro) AS dia,
+DATE_FORMAT(control_temperaturas.fechahoraingresoam,'%r') AS hora_AM,
+DATE_FORMAT(control_temperaturas.fechahoraingresopm,'%r') AS hora_PM,
+temperaturas.minimo,
+control_temperaturas.am,
+control_temperaturas.pm,
+temperaturas.maxima,
+ROUND((control_temperaturas.am +
+control_temperaturas.pm)/2 ,2) AS promedio,
+temperaturas.UNIDADMEDIDA,temperaturas.descripcion
+FROM
+control_temperaturas ,
+temperaturas
+WHERE
+control_temperaturas.concepto = temperaturas.itemtemperatura AND
+(control_temperaturas.am != 0 OR control_temperaturas.pm != 0 ) AND
+control_temperaturas.fecharegistro BETWEEN  $P{fec1}  and $P{fec2} and
+temperaturas.descripcion =  $P{IDCONCEPTO}
+GROUP BY
+DAY(control_temperaturas.fecharegistro),temperaturas.itemtemperatura;]]>
+	</queryString>
+	<field name="fecharegistro" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dia" class="java.lang.Integer"/>
+	<field name="hora_AM" class="java.lang.String"/>
+	<field name="hora_PM" class="java.lang.String"/>
+	<field name="minimo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="am" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pm" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="maxima" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="promedio" class="java.math.BigDecimal"/>
+	<field name="UNIDADMEDIDA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<frame>
+				<reportElement uuid="bef2ac00-53c4-4480-8710-747c699cb199" x="0" y="0" width="752" height="66"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<staticText>
+					<reportElement uuid="aec22ed6-ee43-451d-8d9e-f2c2a1521d71" x="276" y="0" width="248" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI Symbol" size="12" isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[CONTROL DE TEMPERATURA Y HUMEDAD]]></text>
+				</staticText>
+				<image>
+					<reportElement uuid="2ac3a4e4-7d8e-4d76-b4f3-82c16804c990" x="0" y="0" width="166" height="66"/>
+					<imageExpression><![CDATA["C:\\Reportes MW\\LOGO SUMISALUD con nit.PNG"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement uuid="4238af51-0214-43ae-8cad-230a796b2df3" x="300" y="20" width="48" height="13"/>
+					<textElement/>
+					<text><![CDATA[PERIODO]]></text>
+				</staticText>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement uuid="a6a788a2-0032-4cf0-8bdb-d8d27bf87109" x="348" y="20" width="100" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{fec1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement uuid="26469eec-6bed-4caa-a005-75e67c53bbd3" x="448" y="20" width="100" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{fec2}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<summary>
+		<band height="359" splitType="Stretch">
+			<lineChart>
+				<chart isShowLegend="true" renderType="svg" theme="default">
+					<reportElement uuid="dc4ac840-48e8-4de0-aef0-0dc08038016f" x="0" y="12" width="752" height="347"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend position="Right"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{descripcion}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{dia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{promedio}]]></valueExpression>
+						<labelExpression><![CDATA[$F{UNIDADMEDIDA}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true" isShowShapes="true">
+					<plot>
+						<seriesColor seriesOrder="0" color="#0099CC"/>
+						<seriesColor seriesOrder="1" color="#FF3333"/>
+						<seriesColor seriesOrder="2" color="#FFCC00"/>
+					</plot>
+					<categoryAxisLabelExpression><![CDATA["Dias"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="true"/>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Minimos & Maximos"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="true"/>
+					</valueAxisFormat>
+					<rangeAxisMaxValueExpression><![CDATA[90]]></rangeAxisMaxValueExpression>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>
