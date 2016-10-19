@@ -3,11 +3,17 @@ package com.managerwarehouse.vista.producto;
 import com.managerwarehouse.model.producto.controltemperatura.ControlTHDao;
 import com.managerwarehouse.model.producto.controltemperatura.ControlTemperaturaHumedad;
 import com.managerwarehouse.model.producto.controltemperatura.TemperaturaDAO;
+import com.managerwarehouse.util.CambiaColorTabla;
 import com.managerwarehouse.util.Edicion;
 import com.managerwarehouse.util.Variables_Gloabales;
 import com.managerwarehouse.util.reportes.GenerarReporte;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
 
@@ -18,6 +24,8 @@ public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
 
     int equivalencia = 0;
     Calendar cal = new GregorianCalendar();
+    CambiaColorTabla cct = new CambiaColorTabla();
+    DefaultTableModel dt;
 
     public FormTemperaturaHumedad() {
         temperaturaDAO = new TemperaturaDAO();
@@ -25,6 +33,8 @@ public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
         tHDao = new ControlTHDao();
         initComponents();
         llenarcombos();
+        dt = (DefaultTableModel) jTable1.getModel();
+        jTable1.setDefaultRenderer(Object.class, cct);
     }
 
     @SuppressWarnings("unchecked")
@@ -226,10 +236,7 @@ public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID. Reg.", "Fecha Reg.", "Dia ", "Hora AM", "Hora PM", "Minimo", "Valor AM", "Valor PM", "Maximo", "Promedio", "Und. Medida", "Realizado"
@@ -398,8 +405,11 @@ public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
                 "'" + edicion.formatearFechaSQL(JD_fecha2.getDate()) + "'",
                 "'" + combofiltroconcepto.getSelectedItem() + "'"};
             Object[][] rs = tHDao.HISTORICO_TEMPERATURAS(key);
+
             if (rs.length > 0) {
-                edicion.llenarTabla(jTable1, rs);
+                    edicion.llenarTabla(jTable1, rs);
+             
+
             } else {
                 edicion.limpiar_tablas(jTable1);
                 edicion.mensajes(1, "no se encontraron registros para el periodo de fechas y concepto establecidos.");
@@ -423,7 +433,7 @@ public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
                 edicion.llenarTabla(jTable1, rs);
                 GenerarReporte gr = new GenerarReporte();
                 gr.GRAFRICO_TEMPERATURA_HUMEDAD(JD_fecha1.getDate(),
-                       JD_fecha2.getDate(),
+                        JD_fecha2.getDate(),
                         combofiltroconcepto.getSelectedItem().toString());
             }
         }
@@ -545,4 +555,15 @@ public class FormTemperaturaHumedad extends javax.swing.JInternalFrame {
         return true;
     }
 
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
+        // SI EN CADA FILA DE LA TABLA LA CELDA 5 ES IGUAL A ACTIVO COLOR AZUL
+        if (String.valueOf(table.getValueAt(row, 5)).equals("ACTIVO")) {
+            setForeground(Color.blue);
+        } // SI NO ES ACTIVO ENTONCES COLOR ROJO
+        else {
+            setForeground(Color.red);
+        }
+
+        return this;
+    }
 }
