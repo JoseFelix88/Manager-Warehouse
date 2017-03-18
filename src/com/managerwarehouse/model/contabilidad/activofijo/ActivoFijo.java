@@ -6,8 +6,8 @@ import java.util.Date;
 public class ActivoFijo {
 
     private int itemactivo;
+    private Categoria categoria;
     private String descripcion;
-    private SubcategoriaAF subcategoria;
     private String marca;
     private String modelo;
     private String numeroserie;
@@ -35,14 +35,6 @@ public class ActivoFijo {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public SubcategoriaAF getSubcategoria() {
-        return subcategoria;
-    }
-
-    public void setSubcategoria(SubcategoriaAF subcategoria) {
-        this.subcategoria = subcategoria;
     }
 
     public String getMarca() {
@@ -139,6 +131,14 @@ public class ActivoFijo {
 
     public void setEmpleado(EmpleadoDTO empleado) {
         this.empleado = empleado;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
 }

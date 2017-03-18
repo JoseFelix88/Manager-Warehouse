@@ -4,6 +4,7 @@ import com.managerwarehouse.controlador.factura_de_compra.ControllerFacturaCompr
 import com.managerwarehouse.controlador.producto.ControllerProductoAux;
 import static com.managerwarehouse.util.Metodos.Obtener_Estado_Formulario;
 import com.managerwarehouse.util.Variables_Gloabales;
+import com.managerwarehouse.vista.factura_de_compra.FormCompras;
 import com.managerwarehouse.vista.factura_de_compra.FormFacturaCompra;
 import com.managerwarehouse.vista.factura_de_compra.FormOrdenCompra;
 import com.managerwarehouse.vista.factura_de_compra.Formconsultacompraproducto;
@@ -60,6 +61,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
     FormDevolucionProveedor formDevolucionProveedor;
     FormPedidoSugerido formPedidoSugerido;
     FormTemperaturaHumedad formTemperaturaHumedad;
+    FormCompras formCompras;
 
     private static JDesktopPane jDesktopPane1;
 
@@ -96,6 +98,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
             Obtener_Eventos_De_SubMenu(contenedor.JM_DevolucionProveedor);
             Obtener_Eventos_De_SubMenu(contenedor.JM_pedidosugerido);
             Obtener_Eventos_De_SubMenu(contenedor.JM_temperaturahumedad);
+            Obtener_Eventos_De_SubMenu(contenedor.JM_auxcompra);
             contenedor.JM_Profile.setText(Variables_Gloabales.EMPLEADO.getNombreCompleto());
         } else {
             contenedor.setVisible(true);
@@ -362,9 +365,9 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
                 }
 
                 break;
-                
+
             case "ctrltemphum":
-                 if (Obtener_Estado_Formulario(this.formTemperaturaHumedad, Contenedor.Panel_Contenedor)) {
+                if (Obtener_Estado_Formulario(this.formTemperaturaHumedad, Contenedor.Panel_Contenedor)) {
                     formTemperaturaHumedad = new FormTemperaturaHumedad();
                     formTemperaturaHumedad.show();
                     Contenedor.Panel_Contenedor.add(formTemperaturaHumedad);
@@ -374,6 +377,21 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
                             (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
                 } else {
                     formTemperaturaHumedad.setIcon(false);
+                }
+
+                break;
+
+            case "compraaux":
+                if (Obtener_Estado_Formulario(this.formCompras, Contenedor.Panel_Contenedor)) {
+                    formCompras = new FormCompras();
+                    formCompras.show();
+                    Contenedor.Panel_Contenedor.add(formCompras);
+                    java.awt.Dimension Tamaño_Panel = Contenedor.Panel_Contenedor.getSize();
+                    java.awt.Dimension Tamaño_InternalFrame = formCompras.getSize();
+                    formCompras.setLocation((Tamaño_Panel.width - Tamaño_InternalFrame.width) / 2,
+                            (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
+                } else {
+                    formCompras.setIcon(false);
                 }
 
                 break;

@@ -1,19 +1,15 @@
 package com.managerwarehouse.controlador.factura_de_compra;
 
 import com.managerwarehouse.controlador.index.ControllerContenedor;
-import com.managerwarehouse.controlador.producto.ControlAsignarCum;
 import com.managerwarehouse.controlador.producto.ControllerProducto;
 import com.managerwarehouse.model.factura_de_compra.DetalleCompraDTO;
 import com.managerwarehouse.model.factura_de_compra.FacturaCompraDAO;
 import com.managerwarehouse.model.factura_de_compra.FacturaCompraDTO;
-import com.managerwarehouse.model.producto.ProductoDAO;
-import com.managerwarehouse.model.producto.ProductoDTO;
 import com.managerwarehouse.model.proveedor.ProveedorDTO;
 import com.managerwarehouse.util.CambiaFormatoTexto;
 import com.managerwarehouse.util.Edicion;
 import com.managerwarehouse.util.Metodos;
 import com.managerwarehouse.util.Variables_Gloabales;
-import com.managerwarehouse.vista.factura_de_compra.FormAddCantidadCompra;
 import com.managerwarehouse.vista.factura_de_compra.FormFacturaCompra;
 import com.managerwarehouse.vista.factura_de_compra.FormValorizarFactura;
 import com.managerwarehouse.vista.index.Contenedor;

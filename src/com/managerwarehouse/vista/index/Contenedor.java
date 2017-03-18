@@ -5,7 +5,6 @@
  */
 package com.managerwarehouse.vista.index;
 
-
 import com.managerwarehouse.util.Variables_Gloabales;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,13 +29,14 @@ public class Contenedor extends javax.swing.JFrame {
         //las que les indicare dejando la letra Z
         setUndecorated(true);
         initComponents();
-
-       //this.setExtendedState(this.MAXIMIZED_BOTH);
-        this.setSize(1010, 720);//Z
         setLocationRelativeTo(null);
         setVisible(true);
+        this.setExtendedState(Contenedor.MAXIMIZED_BOTH);
+//        this.setSize(1010, 720);//Z
+
         if (Variables_Gloabales.EMPLEADO.getNivel() != 2) {
             JM_OrdenCompra.setVisible(false);
+            JM_auxcompra.setVisible(false);
         }
         //Z ... no borde redondeado :COMENTEN ESTAS DOS LINEAS
         java.awt.Shape forma = new java.awt.geom.RoundRectangle2D.Double(0, 0, this.getBounds().width,
@@ -71,7 +71,8 @@ public class Contenedor extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent e) {
 
                 if (e.getClickCount() == 2) {
-                    setExtendedState(ICONIFIED);
+//                    setExtendedState(ICONIFIED);
+                    setExtendedState(Contenedor.MAXIMIZED_BOTH);
                     System.out.println("Double clicked on ");
                 }
             }
@@ -160,6 +161,7 @@ public class Contenedor extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         JM_trasladoproducto = new javax.swing.JMenuItem();
         JM_temperaturahumedad = new javax.swing.JMenuItem();
+        JM_auxcompra = new javax.swing.JMenuItem();
         JM_Profile = new javax.swing.JMenu();
         R_Salir = new javax.swing.JMenuItem();
 
@@ -488,6 +490,15 @@ public class Contenedor extends javax.swing.JFrame {
         JM_temperaturahumedad.setOpaque(true);
         jMenu3.add(JM_temperaturahumedad);
 
+        JM_auxcompra.setBackground(new java.awt.Color(51, 51, 51));
+        JM_auxcompra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        JM_auxcompra.setForeground(new java.awt.Color(255, 204, 0));
+        JM_auxcompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/CLICK.png"))); // NOI18N
+        JM_auxcompra.setText("Auxiliar de Compra");
+        JM_auxcompra.setActionCommand("compraaux");
+        JM_auxcompra.setOpaque(true);
+        jMenu3.add(JM_auxcompra);
+
         Contenedor_Menu_General.add(jMenu3);
 
         JM_Profile.setBackground(new java.awt.Color(255, 255, 255));
@@ -582,22 +593,21 @@ public class Contenedor extends javax.swing.JFrame {
     private void Obtener_Resultado_Click(java.awt.event.ActionEvent evt) {
         if (evt.getActionCommand().equals("Registrar Empleados")) {
 
-          /* if (Obtener_Estado_Formulario(null, this.Panel_Contenedor)) {
+            /* if (Obtener_Estado_Formulario(null, this.Panel_Contenedor)) {
 
-              new controllerProducto().GO();
-                productoII = new FormProducto();
-                Panel_Contenedor.add(productoII);
-                productoII.show();
-                java.awt.Dimension Tamaño_Panel = Panel_Contenedor.getSize();
-                java.awt.Dimension Tamaño_InternalFrame = productoII.getSize();
-                productoII.setLocation((Tamaño_Panel.width - Tamaño_InternalFrame.width) / 2,
-                        (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
-            } else {
+             new controllerProducto().GO();
+             productoII = new FormProducto();
+             Panel_Contenedor.add(productoII);
+             productoII.show();
+             java.awt.Dimension Tamaño_Panel = Panel_Contenedor.getSize();
+             java.awt.Dimension Tamaño_InternalFrame = productoII.getSize();
+             productoII.setLocation((Tamaño_Panel.width - Tamaño_InternalFrame.width) / 2,
+             (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
+             } else {
                  
-//                productoII.show(true);
+             //                productoII.show(true);
                 
-            }*/
-
+             }*/
         } else if (evt.getActionCommand().equals("Registrar Clientes")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Aqui PONER TU SIGUIENTE FORMULARIO");
         } else if (evt.getActionCommand().equals("Salir")) {
@@ -657,6 +667,7 @@ public class Contenedor extends javax.swing.JFrame {
     public javax.swing.JMenu JM_Profile;
     public javax.swing.JMenuItem JM_SalidaAutorizada;
     public javax.swing.JMenuItem JM_Ubicarproducto;
+    public javax.swing.JMenuItem JM_auxcompra;
     public javax.swing.JMenuItem JM_consumosaldopunto;
     public javax.swing.JMenuItem JM_conteofisico;
     public javax.swing.JMenuItem JM_despachoproducto;

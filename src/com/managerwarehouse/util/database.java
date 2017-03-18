@@ -109,7 +109,7 @@ public class database {
             q2 += " WHERE " + where;
         }
 
-//        System.out.println(q);
+        System.out.println(q);
         //obtenemos la cantidad de registros existentes en la tabla
         try {
 
