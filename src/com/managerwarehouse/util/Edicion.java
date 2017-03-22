@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +46,11 @@ public class Edicion extends database {
 
     public int v = 1;
 
+    public String AGREGAR_CEROS_LEFT(int numero){
+        Formatter fmt = new Formatter();
+        return fmt.format("%04d", numero).toString();
+    }
+    
     public void llenartabla(JTable tabla, List<Object> list) {
         if (list != null) {
 

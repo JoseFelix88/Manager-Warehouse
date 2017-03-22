@@ -162,6 +162,12 @@ public class Contenedor extends javax.swing.JFrame {
         JM_trasladoproducto = new javax.swing.JMenuItem();
         JM_temperaturahumedad = new javax.swing.JMenuItem();
         JM_auxcompra = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
+        JMACTIVOFIJO = new javax.swing.JMenuItem();
+        JM_LISTARACTIVOS = new javax.swing.JMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        JMReporteInOut1 = new javax.swing.JMenuItem();
         JM_Profile = new javax.swing.JMenu();
         R_Salir = new javax.swing.JMenuItem();
 
@@ -476,6 +482,7 @@ public class Contenedor extends javax.swing.JFrame {
         JM_trasladoproducto.setBackground(new java.awt.Color(51, 51, 51));
         JM_trasladoproducto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         JM_trasladoproducto.setForeground(new java.awt.Color(255, 204, 0));
+        JM_trasladoproducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vista_style_business_and_data_icons_icons_pack_120673/el-control-de-repetir-icono-8279-32.png"))); // NOI18N
         JM_trasladoproducto.setText("Traslados de Productos");
         JM_trasladoproducto.setActionCommand("TrasladosProductos");
         JM_trasladoproducto.setOpaque(true);
@@ -501,8 +508,64 @@ public class Contenedor extends javax.swing.JFrame {
 
         Contenedor_Menu_General.add(jMenu3);
 
+        jMenu6.setForeground(new java.awt.Color(255, 255, 255));
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/calculations.png"))); // NOI18N
+        jMenu6.setText("Contabilidad");
+        jMenu6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jSeparator8.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator8.setOpaque(true);
+        jMenu6.add(jSeparator8);
+
+        JMACTIVOFIJO.setBackground(new java.awt.Color(51, 51, 51));
+        JMACTIVOFIJO.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        JMACTIVOFIJO.setForeground(new java.awt.Color(255, 153, 0));
+        JMACTIVOFIJO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/desk.png"))); // NOI18N
+        JMACTIVOFIJO.setText("Gestionar Activos Fijos");
+        JMACTIVOFIJO.setActionCommand("Formactivofijo");
+        JMACTIVOFIJO.setOpaque(true);
+        JMACTIVOFIJO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMACTIVOFIJOActionPerformed(evt);
+            }
+        });
+        jMenu6.add(JMACTIVOFIJO);
+
+        JM_LISTARACTIVOS.setBackground(new java.awt.Color(51, 51, 51));
+        JM_LISTARACTIVOS.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        JM_LISTARACTIVOS.setForeground(new java.awt.Color(255, 153, 0));
+        JM_LISTARACTIVOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analytics.png"))); // NOI18N
+        JM_LISTARACTIVOS.setText("Listado de Activos");
+        JM_LISTARACTIVOS.setActionCommand("invFisico");
+        JM_LISTARACTIVOS.setOpaque(true);
+        JM_LISTARACTIVOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JM_LISTARACTIVOSActionPerformed(evt);
+            }
+        });
+        jMenu6.add(JM_LISTARACTIVOS);
+
+        jSeparator9.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator9.setOpaque(true);
+        jMenu6.add(jSeparator9);
+
+        JMReporteInOut1.setBackground(new java.awt.Color(51, 51, 51));
+        JMReporteInOut1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        JMReporteInOut1.setForeground(new java.awt.Color(255, 153, 0));
+        JMReporteInOut1.setText("Entradas/Salidas - Diarias, Semanales");
+        JMReporteInOut1.setActionCommand("ReporteInOut");
+        JMReporteInOut1.setOpaque(true);
+        JMReporteInOut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMReporteInOut1ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(JMReporteInOut1);
+
+        Contenedor_Menu_General.add(jMenu6);
+
         JM_Profile.setBackground(new java.awt.Color(255, 255, 255));
-        JM_Profile.setForeground(new java.awt.Color(255, 255, 255));
+        JM_Profile.setForeground(new java.awt.Color(204, 204, 0));
         JM_Profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Profile.png"))); // NOI18N
         JM_Profile.setToolTipText("");
         JM_Profile.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -581,6 +644,18 @@ public class Contenedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JM_pedidosugeridoActionPerformed
 
+    private void JMACTIVOFIJOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMACTIVOFIJOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JMACTIVOFIJOActionPerformed
+
+    private void JM_LISTARACTIVOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JM_LISTARACTIVOSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JM_LISTARACTIVOSActionPerformed
+
+    private void JMReporteInOut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMReporteInOut1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JMReporteInOut1ActionPerformed
+
     private void Obtener_Eventos_De_SubMenu(javax.swing.JMenuItem SubMenu) {
         SubMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evento) {
@@ -655,13 +730,16 @@ public class Contenedor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar Contenedor_Menu_General;
+    public javax.swing.JMenuItem JMACTIVOFIJO;
     public javax.swing.JMenuItem JMReporte;
     public javax.swing.JMenuItem JMReporteInOut;
+    public javax.swing.JMenuItem JMReporteInOut1;
     public javax.swing.JMenuItem JMReporteInvFisico;
     public javax.swing.JMenuItem JM_CompraProducto;
     public javax.swing.JMenuItem JM_ConsumoSaldoGeneral;
     public javax.swing.JMenuItem JM_DevolucionProveedor;
     public javax.swing.JMenuItem JM_DevolucionPunto;
+    public javax.swing.JMenuItem JM_LISTARACTIVOS;
     public javax.swing.JMenuItem JM_Lotes;
     public javax.swing.JMenuItem JM_OrdenCompra;
     public javax.swing.JMenu JM_Profile;
@@ -688,6 +766,7 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -695,5 +774,7 @@ public class Contenedor extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
     // End of variables declaration//GEN-END:variables
 }

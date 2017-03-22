@@ -4,6 +4,7 @@ import com.managerwarehouse.controlador.factura_de_compra.ControllerFacturaCompr
 import com.managerwarehouse.controlador.producto.ControllerProductoAux;
 import static com.managerwarehouse.util.Metodos.Obtener_Estado_Formulario;
 import com.managerwarehouse.util.Variables_Gloabales;
+import com.managerwarehouse.vista.contabilidad.activosfijos.FormActivoFijo;
 import com.managerwarehouse.vista.factura_de_compra.FormCompras;
 import com.managerwarehouse.vista.factura_de_compra.FormFacturaCompra;
 import com.managerwarehouse.vista.factura_de_compra.FormOrdenCompra;
@@ -62,6 +63,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
     FormPedidoSugerido formPedidoSugerido;
     FormTemperaturaHumedad formTemperaturaHumedad;
     FormCompras formCompras;
+    FormActivoFijo formActivoFijo;
 
     private static JDesktopPane jDesktopPane1;
 
@@ -99,6 +101,7 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
             Obtener_Eventos_De_SubMenu(contenedor.JM_pedidosugerido);
             Obtener_Eventos_De_SubMenu(contenedor.JM_temperaturahumedad);
             Obtener_Eventos_De_SubMenu(contenedor.JM_auxcompra);
+            Obtener_Eventos_De_SubMenu(contenedor.JMACTIVOFIJO);
             contenedor.JM_Profile.setText(Variables_Gloabales.EMPLEADO.getNombreCompleto());
         } else {
             contenedor.setVisible(true);
@@ -392,6 +395,21 @@ public class ControllerContenedor extends SwingWorker<Object, Object> {
                             (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
                 } else {
                     formCompras.setIcon(false);
+                }
+
+                break;
+                
+                 case "Formactivofijo":
+                if (Obtener_Estado_Formulario(this.formActivoFijo, Contenedor.Panel_Contenedor)) {
+                    formActivoFijo = new FormActivoFijo();
+                    formActivoFijo.show();
+                    Contenedor.Panel_Contenedor.add(formActivoFijo);
+                    java.awt.Dimension Tamaño_Panel = Contenedor.Panel_Contenedor.getSize();
+                    java.awt.Dimension Tamaño_InternalFrame = formActivoFijo.getSize();
+                    formActivoFijo.setLocation((Tamaño_Panel.width - Tamaño_InternalFrame.width) / 2,
+                            (Tamaño_Panel.height - Tamaño_InternalFrame.height) / 2);
+                } else {
+                    formActivoFijo.setIcon(false);
                 }
 
                 break;
